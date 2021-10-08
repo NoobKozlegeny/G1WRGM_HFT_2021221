@@ -8,5 +8,6 @@ namespace G1WRGM_HFT_2021221.Models
 {
     class SocialMedias
     {
+        //Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="|DataDirectory|\SocialMediaDatabase.mdf";Integrated Security=True
     }
 }
