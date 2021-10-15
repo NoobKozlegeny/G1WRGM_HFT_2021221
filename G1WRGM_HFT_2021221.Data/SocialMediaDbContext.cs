@@ -43,17 +43,17 @@ namespace G1WRGM_HFT_2021221.Data
                 entity.HasMany(users => users.AllPosts).WithOne(post => post.User);
             });
             //SocialMedia Database default rows
-            modelBuilder.Entity<SocialMedia>().HasData(new SocialMedia { SocialMediaName = "Facebook", Creation = 2004, Users = null });
-            modelBuilder.Entity<SocialMedia>().HasData(new SocialMedia { SocialMediaName = "Twitter", Creation = 2006, Users = null });
-            modelBuilder.Entity<SocialMedia>().HasData(new SocialMedia { SocialMediaName = "Reddit", Creation = 2005, Users = null });
+            modelBuilder.Entity<SocialMedia>().HasData(new SocialMedia { SocialMediaName = "Facebook", Creation = 2004 });
+            modelBuilder.Entity<SocialMedia>().HasData(new SocialMedia { SocialMediaName = "Twitter", Creation = 2006 });
+            modelBuilder.Entity<SocialMedia>().HasData(new SocialMedia { SocialMediaName = "Reddit", Creation = 2005 });
             //Users Database default rows
-            modelBuilder.Entity<User>().HasData(new User { UserName = "David Smith", SocialMediaName = "Facebook", UserID = 4323213, AllPosts = null });
-            modelBuilder.Entity<User>().HasData(new User { UserName = "Emily Commie(She/They)", SocialMediaName = "Twitter", UserID = 8956232, AllPosts = null });
-            modelBuilder.Entity<User>().HasData(new User { UserName = "LivingASlothsLife", SocialMediaName = "Reddit", UserID = 1213464, AllPosts = null });
+            modelBuilder.Entity<User>().HasData(new User { UserName = "David Smith", SocialMediaName = "Facebook", UserID = 4323213 });
+            modelBuilder.Entity<User>().HasData(new User { UserName = "Emily Commie(She/They)", SocialMediaName = "Twitter", UserID = 8956232 });
+            modelBuilder.Entity<User>().HasData(new User { UserName = "LivingASlothsLife", SocialMediaName = "Reddit", UserID = 1213464 });
             //Posts Database default rows
-            modelBuilder.Entity<Post>().HasData(new Post { PostID = 31243, UserID = 4323213, Content = "HELLO JULIE ARE YOU RIGHT AND SAY PAUL BROTHER  PHILLIP NEWS SEPARATE MAY AGO FINISH OK TELL", Likes = 1, Dislikes = 0 });
-            modelBuilder.Entity<Post>().HasData(new Post { PostID = 89755, UserID = 8956232, Content = "Yeah communism never worked, then explain this: http://arts.u-szeged.hu/tortenelem-180701/bevezetes-oskor", Likes = 234, Dislikes = 0 });
-            modelBuilder.Entity<Post>().HasData(new Post { PostID = 24785, UserID = 1213464, Content = "China raises concerns over male characters with feminine traits in Videogames and uses Venti as an example of a character that is problematic.", Likes = 2782, Dislikes = 285 });
+            modelBuilder.Entity<Post>().HasData(new Post { PostID = 31243, UserID = 4323213, Content = "HELLO JULIE ARE YOU RIGHT AND SAY PAUL BROTHER  PHILLIP NEWS SEPARATE MAY AGO FINISH OK TELL", Likes = 1 });
+            modelBuilder.Entity<Post>().HasData(new Post { PostID = 89755, UserID = 8956232, Content = "Yeah communism never worked, then explain this: http://arts.u-szeged.hu/tortenelem-180701/bevezetes-oskor", Likes = 234 });
+            modelBuilder.Entity<Post>().HasData(new Post { PostID = 24785, UserID = 1213464, Content = "China raises concerns over male characters with feminine traits in Videogames and uses Venti as an example of a character that is problematic.", Likes = 2782 });
         }
     }
 }

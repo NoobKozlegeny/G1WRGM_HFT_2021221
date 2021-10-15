@@ -12,6 +12,7 @@ namespace G1WRGM_HFT_2021221.Models
     {
         [Key]
         public int UserID { get; set; }
+        [MaxLength(30)]
         public string UserName { get; set; }
         public string SocialMediaName { get; set; }
         [NotMapped]

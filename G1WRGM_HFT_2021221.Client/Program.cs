@@ -6,20 +6,19 @@ using System.Linq;
 
 namespace G1WRGM_HFT_2021221.Client
 {
+    //TODO: DELETE ALL THE UNNEEDED DEPENDENCIES! (Only Model can remain)
     class Program
     {
         static void Main(string[] args)
         {
             SocialMediaDbContext db = new SocialMediaDbContext();
-            //db.SocialMedias.Add(new SocialMedia { Name = "Facebook", Creation = 2004, Users = null });
-            //db.SocialMedias.Add(new SocialMedia { Name = "Twitter", Creation = 2006, Users = null });
-            //db.SocialMedias.Add(new SocialMedia { Name = "Reddit", Creation = 2005, Users = null });
-
+            //Test 1: Can I write all the informations for Reddit?
+            IEnumerable<SocialMedia> t1_1 = db.SocialMedias.Where(x => x.SocialMediaName == "Reddit").ToList();
+            foreach (var item in t1_1)
+            {
+                Console.WriteLine($"{item.SocialMediaName} -- {item.Creation}");
+            }
             db.SaveChanges();
-            //foreach (var item in db.SocialMedias)
-            //{
-            //    Console.WriteLine($"{item.Name} -- {item.Creation} -- {item.Users}");
-            //}
         }
     }
 }
