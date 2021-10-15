@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace G1WRGM_HFT_2021221.Models.Other
+namespace G1WRGM_HFT_2021221.Data
 {
-    enum PersonalRatingEnum
+    class UserContext
     {
-        Heresy, Cringe, Decent, Good, Based
     }
 }

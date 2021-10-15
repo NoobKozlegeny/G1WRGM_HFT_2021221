@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace G1WRGM_HFT_2021221.Models
 {
-    class Post
+    public class Post
     {
         [Key]
         public string PostID { get; set; }

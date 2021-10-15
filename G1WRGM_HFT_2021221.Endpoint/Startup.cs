@@ -32,7 +32,8 @@ namespace G1WRGM_HFT_2021221.Endpoint
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    await context.Response.WriteAsync("According to YouTube statistics, only a small percentage of people who watch my videos are actually subscribed." +
+                        " So if you end up liking this video, consider subscribing. It's free and you can always unsubscribe. Enjoy the video.");
                 });
             });
         }
