@@ -9,7 +9,7 @@ namespace G1WRGM_HFT_2021221.Client
     {
         static void Main(string[] args)
         {
-            SocialMediaContext db = new SocialMediaContext();
+            SocialMediaContext1 db = new SocialMediaContext1();
             SocialMedia fb = db.SocialMedias.FindAsync("Facebook").Result;
             Console.WriteLine(fb.Name);
         }

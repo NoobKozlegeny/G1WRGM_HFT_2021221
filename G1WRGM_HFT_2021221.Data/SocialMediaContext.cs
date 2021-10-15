@@ -1,15 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using G1WRGM_HFT_2021221.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace G1WRGM_HFT_2021221.Models
+namespace G1WRGM_HFT_2021221.Data
 {
     public class SocialMediaContext : DbContext
     {
         public virtual DbSet<SocialMedia> SocialMedias { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
         public SocialMediaContext()
         {
             this.Database.EnsureCreated();
@@ -27,7 +30,7 @@ namespace G1WRGM_HFT_2021221.Models
             }
         }
 
-        protected void OnModelCreating()
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             SocialMedias.Add(new SocialMedia { Name = "Facebook", Creation = 2004, Users = null });
             SocialMedias.Add(new SocialMedia { Name = "Twitter", Creation = 2006, Users = null });
