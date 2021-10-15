@@ -11,13 +11,11 @@ namespace G1WRGM_HFT_2021221.Models
     public class Post
     {
         [Key]
-        public string PostID { get; set; }
-        [ForeignKey(nameof(User))]
-        public string UserID { get; set; }
+        public int PostID { get; set; }
+        public int UserID { get; set; }
+        [NotMapped]
+        public virtual User User { get; set; }
         public string Content { get; set; }
         public int Likes { get; set; }
-        public int Dislikes { get; set; }
-        [NotMapped]
-        public ICollection<string> Comments { get; set; }
     }
 }

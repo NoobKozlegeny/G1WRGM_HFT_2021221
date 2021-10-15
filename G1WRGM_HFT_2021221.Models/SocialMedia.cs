@@ -11,10 +11,9 @@ namespace G1WRGM_HFT_2021221.Models
 {
     public class SocialMedia
     {
-        //Todo: LazyLoader
         //Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="|DataDirectory|\SocialMediaDatabase.mdf";Integrated Security=True
         [Key]
-        public string Name { get; set; }
+        public string SocialMediaName { get; set; }
         public virtual ICollection<User> Users { get; set; }
         public int Creation { get; set; }
         //[NotMapped]
