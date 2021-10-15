@@ -6,10 +6,14 @@
 
   <ItemGroup>
     <None Remove="SocialMediaDatabase.mdf" />
+    <None Remove="SocialMediaDatabase_log.ldf" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="SocialMediaDatabase.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SocialMediaDatabase_log.ldf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
