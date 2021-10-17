@@ -21,6 +21,5 @@ namespace G1WRGM_HFT_2021221.Models
         public string Username { get; set; } //Potentional 4th table?
         public string Content { get; set; }
         public int Likes { get; set; }
-        public int Dislikes { get; set; }
     }
 }
