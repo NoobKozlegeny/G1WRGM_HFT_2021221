@@ -18,5 +18,10 @@ namespace G1WRGM_HFT_2021221.Models
         public virtual ICollection<Video> Videos { get; set; }
         public int Creation { get; set; }
         public int SubscriberCount { get; set; }
+
+        public YTContentCreator()
+        {
+            Videos = new List<Video>();
+        }
     }
 }

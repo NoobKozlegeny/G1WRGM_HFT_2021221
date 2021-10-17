@@ -37,27 +37,39 @@ namespace G1WRGM_HFT_2021221.Data
             //One-Many Foreign Key reliationship between YTContentCreators and Videos
             modelBuilder.Entity<YTContentCreator>(entity =>
             {
-                entity.HasMany(ytcc => ytcc.Videos).WithOne(video => video.YTContentCreator);
+                entity.HasMany(ytcc => ytcc.Videos).WithOne(video => video.YTContentCreator)
+                .HasForeignKey(video => video.CreatorName).OnDelete(DeleteBehavior.ClientSetNull);
             });
             //One-Many Foreign Key reliationship between Videos and Comments
             modelBuilder.Entity<Video>(entity =>
             {
-                entity.HasMany(video => video.Comments).WithOne(comment => comment.Video);
+                entity.HasMany(video => video.Comments).WithOne(comment => comment.Video)
+                .HasForeignKey(comment => comment.VideoID).OnDelete(DeleteBehavior.ClientSetNull);
             });
             //Comment Database default rows
             List<Comment> CommentList = new List<Comment>()
             {
-                new Comment { CommentID = 31243, VideoID = 4323213, Username = "Joe Bob", Content = "HELLO JULIE ARE YOU RIGHT AND SAY PAUL BROTHER  PHILLIP NEWS SEPARATE MAY AGO FINISH OK TELL", Likes = 1 },
-                new Comment { CommentID = 89755, VideoID = 8956232, Username = "Emily[She/They]", Content = "Yeah communism never worked, then explain this: http://arts.u-szeged.hu/tortenelem-180701/bevezetes-oskor", Likes = 234 },
-                new Comment { CommentID = 24785, VideoID = 1213464, Username = "BasedDude", Content = "China raises concerns over male characters with feminine traits in Videogames and uses Venti as an example of a character that is problematic.", Likes = 2782 }
+                new Comment { CommentID = 31243, VideoID = 4323213, Username = "Joe Bob", 
+                    Content = "HELLO JULIE ARE YOU RIGHT AND SAY PAUL BROTHER  PHILLIP NEWS SEPARATE MAY AGO FINISH OK TELL", Likes = 1 },
+                new Comment { CommentID = 89755, VideoID = 8956232, Username = "Emily[She/They]", 
+                    Content = "Yeah communism never worked, then explain this: http://arts.u-szeged.hu/tortenelem-180701/bevezetes-oskor", Likes = 234 },
+                new Comment { CommentID = 24785, VideoID = 1213464, Username = "BasedDude", 
+                    Content = "China raises concerns over male characters with feminine traits in Videogames and uses Venti as an example of a character that is problematic.", Likes = 2782 }
             };
             //Video Database default rows
             List<Video> VideoList = new List<Video>()
             {
-                new Video { Title = "AAA", CreatorName = "Zsdav", VideoID = 4323213, ViewCount = 312234 },
-                new Video { Title = "BBB", CreatorName = "JustVidman", VideoID = 8956232, ViewCount = 993231 },
-                new Video { Title = "CCC", CreatorName = "Andras Horvath", VideoID = 1213464, ViewCount = 23144 }
+                new Video { Title = "AAA", CreatorName = "Zsdav", VideoID = 4323213, 
+                    ViewCount = 312234 },
+                new Video { Title = "BBB", CreatorName = "JustVidman", VideoID = 8956232, 
+                    ViewCount = 993231 },
+                new Video { Title = "CCC", CreatorName = "Andras Horvath", VideoID = 1213464, 
+                    ViewCount = 23144 }
             };
+            for (int i = 0; i < VideoList.Count; i++)
+            {
+                VideoList[i].Comments.Add(CommentList[i]);
+            }
             //YTContentCreator Database default rows
             List<YTContentCreator> CreatorList = new List<YTContentCreator>()
             {
@@ -65,6 +77,10 @@ namespace G1WRGM_HFT_2021221.Data
                 new YTContentCreator { CreatorName = "JustVidman", Creation = 2013, SubscriberCount = 692000 },
                 new YTContentCreator { CreatorName = "Andras Horvath", Creation = 2006, SubscriberCount = 166000 }
             };
+            for (int i = 0; i < CreatorList.Count; i++)
+            {
+                CreatorList[i].Videos.Add(VideoList[i]);
+            }
             //Seeding
             foreach (var item in CreatorList)
             {
@@ -79,7 +95,7 @@ namespace G1WRGM_HFT_2021221.Data
                 modelBuilder.Entity<Comment>().HasData(item);
             }
 
-
+            
             //modelBuilder.Entity<YTContentCreator>().HasData(new YTContentCreator { CreatorName = "Zsdav", Creation = 2004, SubscriberCount = 222 });
             //modelBuilder.Entity<YTContentCreator>().HasData(new YTContentCreator { CreatorName = "JustVidman", Creation = 2006 });
             //modelBuilder.Entity<YTContentCreator>().HasData(new YTContentCreator { CreatorName = "Andras Horvath", Creation = 2005 });
