@@ -11,12 +11,12 @@ namespace G1WRGM_HFT_2021221.Client
     {
         static void Main(string[] args)
         {
-            SocialMediaDbContext db = new SocialMediaDbContext();
-            //Test 1: Can I write all the informations for Reddit?
-            IEnumerable<SocialMedia> t1_1 = db.SocialMedias.Where(x => x.SocialMediaName == "Reddit").ToList();
+            YTDbContext db = new YTDbContext();
+            //Test 1: Idk.
+            IEnumerable<YTContentCreator> t1_1 = db.YTContentCreators.Where(x => x.CreatorName == "Zsdav").ToList();
             foreach (var item in t1_1)
             {
-                Console.WriteLine($"{item.SocialMediaName} -- {item.Creation}");
+                Console.WriteLine($"{item.CreatorName} -- {item.Creation}");
             }
             db.SaveChanges();
         }

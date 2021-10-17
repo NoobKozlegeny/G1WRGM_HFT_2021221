@@ -5,15 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="SocialMediaDatabase.mdf" />
-    <None Remove="SocialMediaDatabase_log.ldf" />
+    <None Remove="YTDatabase.mdf" />
+    <None Remove="YTDatabase_log.ldf" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="SocialMediaDatabase.mdf">
+    <Content Include="YTDatabase.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="SocialMediaDatabase_log.ldf">
+    <Content Include="YTDatabase_log.ldf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
