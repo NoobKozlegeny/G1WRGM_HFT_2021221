@@ -21,10 +21,12 @@ namespace G1WRGM_HFT_2021221.Models
         public virtual YTContentCreator YTContentCreator { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public int ViewCount { get; set; }
+        public string AllData { get; }
 
         public Video()
         {
             Comments = new List<Comment>();
+            AllData = $"Title: {Title} -- Views: {ViewCount}";
         }
     }
 }

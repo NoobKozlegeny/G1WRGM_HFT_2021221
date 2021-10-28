@@ -81,7 +81,7 @@ namespace G1WRGM_HFT_2021221.Data
             {
                 CreatorList[i].Videos.Add(VideoList[i]);
             }
-            //Seeding
+            //Seeding (WHY DO I NEED TO MAKE "new ClassName{...}"???)
             foreach (var item in CreatorList)
             {
                 modelBuilder.Entity<YTContentCreator>().HasData(new YTContentCreator { CreatorName = item.CreatorName, Creation = item.Creation, SubscriberCount = item.SubscriberCount });
