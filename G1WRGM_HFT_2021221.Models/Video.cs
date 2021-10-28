@@ -13,7 +13,7 @@ namespace G1WRGM_HFT_2021221.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)] //Technically this is the defaul DB generation.
         [Key]
         public int VideoID { get; set; }
-        [MaxLength(30)]
+        //[MaxLength(30)]
         public string Title { get; set; }
         [ForeignKey(nameof(YTContentCreator))]
         public string CreatorName { get; set; }

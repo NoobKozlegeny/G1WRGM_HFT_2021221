@@ -84,17 +84,17 @@ namespace G1WRGM_HFT_2021221.Data
             //Seeding
             foreach (var item in CreatorList)
             {
-                modelBuilder.Entity<YTContentCreator>().HasData(item);
+                modelBuilder.Entity<YTContentCreator>().HasData(new YTContentCreator { CreatorName = item.CreatorName, Creation = item.Creation, SubscriberCount = item.SubscriberCount });
             }
             foreach (var item in VideoList)
             {
-                modelBuilder.Entity<Video>().HasData(item);
+                modelBuilder.Entity<Video>().HasData(new Video { Title = item.Title, CreatorName = item.CreatorName, VideoID = item.VideoID });
             }
             foreach (var item in CommentList)
             {
-                modelBuilder.Entity<Comment>().HasData(item);
+                modelBuilder.Entity<Comment>().HasData(new Comment { CommentID = item.CommentID, VideoID = item.VideoID, Content = item.Content, Likes = item.Likes });
             }
-
+            
             
             //modelBuilder.Entity<YTContentCreator>().HasData(new YTContentCreator { CreatorName = "Zsdav", Creation = 2004, SubscriberCount = 222 });
             //modelBuilder.Entity<YTContentCreator>().HasData(new YTContentCreator { CreatorName = "JustVidman", Creation = 2006 });
