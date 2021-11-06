@@ -14,6 +14,7 @@ namespace G1WRGM_HFT_2021221.Models
         //Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="|DataDirectory|\SocialMediaDatabase.mdf";Integrated Security=True
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)] //Technically this is the defaul DB generation.
         [Key]
+        public int CreatorID { get; set; }
         public string CreatorName { get; set; }
         public virtual ICollection<Video> Videos { get; set; }
         public int Creation { get; set; }

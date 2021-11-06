@@ -38,7 +38,7 @@ namespace G1WRGM_HFT_2021221.Data
             modelBuilder.Entity<YTContentCreator>(entity =>
             {
                 entity.HasMany(ytcc => ytcc.Videos).WithOne(video => video.YTContentCreator)
-                .HasForeignKey(video => video.CreatorName).OnDelete(DeleteBehavior.ClientSetNull);
+                .HasForeignKey(video => video.CreatorID).OnDelete(DeleteBehavior.ClientSetNull);
             });
             //One-Many Foreign Key reliationship between Videos and Comments
             modelBuilder.Entity<Video>(entity =>
@@ -59,11 +59,11 @@ namespace G1WRGM_HFT_2021221.Data
             //Video Database default rows
             List<Video> VideoList = new List<Video>()
             {
-                new Video { Title = "AAA", CreatorName = "Zsdav", VideoID = 4323213, 
+                new Video { Title = "AAA", CreatorID = 1, VideoID = 4323213, 
                     ViewCount = 312234 },
-                new Video { Title = "BBB", CreatorName = "JustVidman", VideoID = 8956232, 
+                new Video { Title = "BBB", CreatorID = 2, VideoID = 8956232, 
                     ViewCount = 993231 },
-                new Video { Title = "CCC", CreatorName = "Andras Horvath", VideoID = 1213464, 
+                new Video { Title = "CCC", CreatorID = 3, VideoID = 1213464, 
                     ViewCount = 23144 }
             };
             for (int i = 0; i < VideoList.Count; i++)
@@ -73,9 +73,9 @@ namespace G1WRGM_HFT_2021221.Data
             //YTContentCreator Database default rows
             List<YTContentCreator> CreatorList = new List<YTContentCreator>()
             {
-                new YTContentCreator { CreatorName = "Zsdav", Creation = 2008, SubscriberCount = 538000 },
-                new YTContentCreator { CreatorName = "JustVidman", Creation = 2013, SubscriberCount = 692000 },
-                new YTContentCreator { CreatorName = "Andras Horvath", Creation = 2006, SubscriberCount = 166000 }
+                new YTContentCreator { CreatorID = 1, CreatorName = "Zsdav", Creation = 2008, SubscriberCount = 538000 },
+                new YTContentCreator { CreatorID = 2, CreatorName = "JustVidman", Creation = 2013, SubscriberCount = 692000 },
+                new YTContentCreator { CreatorID = 3, CreatorName = "Andras Horvath", Creation = 2006, SubscriberCount = 166000 }
             };
             for (int i = 0; i < CreatorList.Count; i++)
             {
@@ -84,11 +84,11 @@ namespace G1WRGM_HFT_2021221.Data
             //Seeding (WHY DO I NEED TO MAKE "new ClassName{...}"???)
             foreach (var item in CreatorList)
             {
-                modelBuilder.Entity<YTContentCreator>().HasData(new YTContentCreator { CreatorName = item.CreatorName, Creation = item.Creation, SubscriberCount = item.SubscriberCount });
+                modelBuilder.Entity<YTContentCreator>().HasData(new YTContentCreator { CreatorID = item.CreatorID, CreatorName = item.CreatorName, Creation = item.Creation, SubscriberCount = item.SubscriberCount });
             }
             foreach (var item in VideoList)
             {
-                modelBuilder.Entity<Video>().HasData(new Video { Title = item.Title, CreatorName = item.CreatorName, VideoID = item.VideoID });
+                modelBuilder.Entity<Video>().HasData(new Video { Title = item.Title, CreatorID = item.CreatorID, VideoID = item.VideoID });
             }
             foreach (var item in CommentList)
             {

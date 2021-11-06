@@ -16,7 +16,7 @@ namespace G1WRGM_HFT_2021221.Models
         //[MaxLength(30)]
         public string Title { get; set; }
         [ForeignKey(nameof(YTContentCreator))]
-        public string CreatorName { get; set; }
+        public int CreatorID { get; set; }
         [NotMapped]
         public virtual YTContentCreator YTContentCreator { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
