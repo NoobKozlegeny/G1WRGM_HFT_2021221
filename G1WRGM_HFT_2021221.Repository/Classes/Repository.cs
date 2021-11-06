@@ -22,5 +22,11 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
         }
 
         public abstract T GetOne(int id);
+        //CRUD
+        public abstract T Create(string content);
+        public abstract T Delete(int id);
+        public abstract T Read(int id);
+        public abstract IQueryable<T> ReadAll();
+        public abstract T Update(int id, string content);
     }
 }

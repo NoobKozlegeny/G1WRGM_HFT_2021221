@@ -19,9 +19,34 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
             ctx.SaveChanges();
         }
 
+        public override YTContentCreator Create(string content)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override YTContentCreator Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public override YTContentCreator GetOne(int id)
         {
             return GetAll().SingleOrDefault(x => x.CreatorID == id);
+        }
+
+        public override YTContentCreator Read(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IQueryable<YTContentCreator> ReadAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override YTContentCreator Update(int id, string content)
+        {
+            throw new NotImplementedException();
         }
     }
 }
