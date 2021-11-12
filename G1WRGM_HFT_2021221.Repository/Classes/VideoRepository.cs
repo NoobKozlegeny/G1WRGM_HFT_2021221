@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace G1WRGM_HFT_2021221.Repository.Classes
 {
-    class VideoRepository : Repository<Video>, IVideoRepository
+    public class VideoRepository : Repository<Video>, IVideoRepository
     {
         YTDbContext db;
         public VideoRepository(YTDbContext db)
