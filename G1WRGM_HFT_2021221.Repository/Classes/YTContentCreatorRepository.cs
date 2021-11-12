@@ -1,4 +1,5 @@
-﻿using G1WRGM_HFT_2021221.Models;
+﻿using G1WRGM_HFT_2021221.Data;
+using G1WRGM_HFT_2021221.Models;
 using G1WRGM_HFT_2021221.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,42 +12,50 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
 {
     public class YTContentCreatorRepository : Repository<YTContentCreator>, IYTContentCreatorRepository
     {
-        public YTContentCreatorRepository(DbContext ctx) : base(ctx) { }
+        YTDbContext db;
+        public YTContentCreatorRepository(YTDbContext db)
+        {
+            this.db = db;
+        }
+        
         public void ChangeSubscriberCount(int id, int newCount)
         {
-            var contentCreator = GetOne(id);
+            var contentCreator = Read(id);
             contentCreator.SubscriberCount = newCount;
-            ctx.SaveChanges();
+            db.SaveChanges();
         }
 
-        public override YTContentCreator Create(string content)
+        //CRUD
+
+        public override void Create(YTContentCreator contentCreator)
         {
-            throw new NotImplementedException();
+            db.YTContentCreators.Add(contentCreator);
+            db.SaveChanges();
         }
 
-        public override YTContentCreator Delete(int id)
+        public override void Delete(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public override YTContentCreator GetOne(int id)
-        {
-            return GetAll().SingleOrDefault(x => x.CreatorID == id);
+            db.YTContentCreators.Remove(Read(id));
+            db.SaveChanges();
         }
 
         public override YTContentCreator Read(int id)
         {
-            throw new NotImplementedException();
+            return db.YTContentCreators.FirstOrDefault(x=>x.CreatorID == id);
         }
 
-        public override IQueryable<YTContentCreator> ReadAll()
+        public override IQueryable<YTContentCreator> ReadAll() //GetAll csak ReadAll a neve, mert így logikusabb
         {
-            throw new NotImplementedException();
+            return db.YTContentCreators;
         }
 
-        public override YTContentCreator Update(int id, string content)
+        public override void Update(YTContentCreator contentCreator)
         {
-            throw new NotImplementedException();
+            YTContentCreator contentCreatorInDireNeedForUpdating = Read(contentCreator.CreatorID);
+            contentCreatorInDireNeedForUpdating = contentCreator;
+            db.SaveChanges();
         }
+
+        
     }
 }

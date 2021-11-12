@@ -10,23 +10,30 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
 {
     public abstract class Repository<T> : IRepository<T> where T : class
     {
-        protected DbContext ctx;
-        public Repository(DbContext ctx)
-        {
-            this.ctx = ctx;
-        }
+        #region Sipos gondolatmenet hátha mégis kell
+        //protected DbContext ctx;
+        //public Repository(DbContext ctx)
+        //{
+        //    this.ctx = ctx;
+        //}
 
-        public IQueryable<T> GetAll()
-        {
-            return ctx.Set<T>();
-        }
+        //public abstract T GetOne(int id);
 
-        public abstract T GetOne(int id);
+        //public IQueryable<T> GetAll()
+        //{
+        //    return ctx.Set<T>();
+        //}
+
+        //public abstract IQueryable<T> GetAll();
+        //public abstract T GetOne(int id);
+        #endregion
+
         //CRUD
-        public abstract T Create(string content);
-        public abstract T Delete(int id);
-        public abstract T Read(int id);
-        public abstract IQueryable<T> ReadAll();
-        public abstract T Update(int id, string content);
+
+        public abstract void Create(T content); //C
+        public abstract void Delete(int id); //D       
+        public abstract T Read(int id); //R
+        public abstract IQueryable<T> ReadAll(); //R
+        public abstract void Update(T content); //U
     }
 }

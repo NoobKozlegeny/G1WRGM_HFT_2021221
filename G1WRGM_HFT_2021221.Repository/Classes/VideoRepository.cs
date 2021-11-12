@@ -1,4 +1,5 @@
-﻿using G1WRGM_HFT_2021221.Models;
+﻿using G1WRGM_HFT_2021221.Data;
+using G1WRGM_HFT_2021221.Models;
 using G1WRGM_HFT_2021221.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,35 +12,41 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
 {
     class VideoRepository : Repository<Video>, IVideoRepository
     {
-        public VideoRepository(DbContext ctx) : base(ctx) { }
-        public override Video Create(string content)
+        YTDbContext db;
+        public VideoRepository(YTDbContext db)
         {
-            throw new NotImplementedException();
+            this.db = db;
         }
 
-        public override Video Delete(int id)
+        //CRUD
+
+        public override void Create(Video video)
         {
-            throw new NotImplementedException();
+            db.Videos.Add(video);
+            db.SaveChanges();
         }
 
-        public override Video GetOne(int id)
+        public override void Delete(int id)
         {
-            throw new NotImplementedException();
+            db.Videos.Remove(Read(id));
+            db.SaveChanges();
         }
 
         public override Video Read(int id)
         {
-            throw new NotImplementedException();
+            return db.Videos.FirstOrDefault(x => x.VideoID == id);
         }
 
-        public override IQueryable<Video> ReadAll()
+        public override IQueryable<Video> ReadAll() //GetAll csak ReadAll a neve, mert így logikusabb
         {
-            throw new NotImplementedException();
+            return db.Videos;
         }
 
-        public override Video Update(int id, string content)
+        public override void Update(Video video)
         {
-            throw new NotImplementedException();
+            Video videoToUpdate = Read(video.VideoID);
+            videoToUpdate = video;
+            db.SaveChanges();
         }
     }
 }

@@ -49,7 +49,7 @@ namespace G1WRGM_HFT_2021221.Data
             //Comment Database default rows
             List<Comment> CommentList = new List<Comment>()
             {
-                new Comment { CommentID = 31243, VideoID = 4323213, Username = "Joe Bob", 
+                new Comment { CommentID = 31243, VideoID = 4323213, Username = "Joe Bob",  
                     Content = "HELLO JULIE ARE YOU RIGHT AND SAY PAUL BROTHER  PHILLIP NEWS SEPARATE MAY AGO FINISH OK TELL", Likes = 1 },
                 new Comment { CommentID = 89755, VideoID = 8956232, Username = "Emily[She/They]", 
                     Content = "Yeah communism never worked, then explain this: http://arts.u-szeged.hu/tortenelem-180701/bevezetes-oskor", Likes = 234 },

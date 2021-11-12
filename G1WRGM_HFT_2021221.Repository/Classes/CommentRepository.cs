@@ -1,4 +1,5 @@
-﻿using G1WRGM_HFT_2021221.Models;
+﻿using G1WRGM_HFT_2021221.Data;
+using G1WRGM_HFT_2021221.Models;
 using G1WRGM_HFT_2021221.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,36 +12,41 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
 {
     public class CommentRepository : Repository<Comment>, ICommentRepository
     {
-        public CommentRepository(DbContext ctx) : base(ctx) { }
-
-        public override Comment Create(string content)
+        YTDbContext db;
+        public CommentRepository(YTDbContext db)
         {
-            throw new NotImplementedException();
+            this.db = db;
         }
 
-        public override Comment Delete(int id)
+        //CRUD
+
+        public override void Create(Comment comment)
         {
-            throw new NotImplementedException();
+            db.Comments.Add(comment);
+            db.SaveChanges();
         }
 
-        public override Comment GetOne(int id)
+        public override void Delete(int id)
         {
-            throw new NotImplementedException();
+            db.Comments.Remove(Read(id));
+            db.SaveChanges();
         }
 
         public override Comment Read(int id)
         {
-            throw new NotImplementedException();
+            return db.Comments.FirstOrDefault(x => x.CommentID == id);
         }
 
-        public override IQueryable<Comment> ReadAll()
+        public override IQueryable<Comment> ReadAll() //GetAll csak ReadAll a neve, mert így logikusabb
         {
-            throw new NotImplementedException();
+            return db.Comments;
         }
 
-        public override Comment Update(int id, string content)
+        public override void Update(Comment comment)
         {
-            throw new NotImplementedException();
+            Comment commentToUpdate = Read(comment.CommentID);
+            commentToUpdate = comment;
+            db.SaveChanges();
         }
     }
 }
