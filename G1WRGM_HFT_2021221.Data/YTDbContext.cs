@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 namespace G1WRGM_HFT_2021221.Data
 {
-    //Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="|DataDirectory|\YTDatabase.mdf";Integrated Security=True
-    //F:\Egyetemi dolgok\3. Félév\HFT\Projektek\G1WRGM_HFT_2021221\G1WRGM_HFT_2021221.Data\YTDatabase.mdf
     public class YTDbContext : DbContext
     {
         public virtual DbSet<YTContentCreator> YTContentCreators { get; set; }
@@ -38,38 +36,16 @@ namespace G1WRGM_HFT_2021221.Data
             modelBuilder.Entity<YTContentCreator>(entity =>
             {
                 entity.HasMany(ytcc => ytcc.Videos).WithOne(video => video.YTContentCreator)
-                .HasForeignKey(video => video.CreatorID).OnDelete(DeleteBehavior.ClientSetNull);
+                .HasForeignKey(video => video.CreatorID).OnDelete(DeleteBehavior.Restrict);
             });
             //One-Many Foreign Key reliationship between Videos and Comments
             modelBuilder.Entity<Video>(entity =>
             {
                 entity.HasMany(video => video.Comments).WithOne(comment => comment.Video)
-                .HasForeignKey(comment => comment.VideoID).OnDelete(DeleteBehavior.ClientSetNull);
+                .HasForeignKey(comment => comment.VideoID).OnDelete(DeleteBehavior.Restrict);
             });
-            //Comment Database default rows
-            List<Comment> CommentList = new List<Comment>()
-            {
-                new Comment { CommentID = 31243, VideoID = 4323213, Username = "Joe Bob",  
-                    Content = "HELLO JULIE ARE YOU RIGHT AND SAY PAUL BROTHER  PHILLIP NEWS SEPARATE MAY AGO FINISH OK TELL", Likes = 1 },
-                new Comment { CommentID = 89755, VideoID = 8956232, Username = "Emily[She/They]", 
-                    Content = "Yeah communism never worked, then explain this: http://arts.u-szeged.hu/tortenelem-180701/bevezetes-oskor", Likes = 234 },
-                new Comment { CommentID = 24785, VideoID = 1213464, Username = "BasedDude", 
-                    Content = "China raises concerns over male characters with feminine traits in Videogames and uses Venti as an example of a character that is problematic.", Likes = 2782 }
-            };
-            //Video Database default rows
-            List<Video> VideoList = new List<Video>()
-            {
-                new Video { Title = "AAA", CreatorID = 1, VideoID = 4323213, 
-                    ViewCount = 312234 },
-                new Video { Title = "BBB", CreatorID = 2, VideoID = 8956232, 
-                    ViewCount = 993231 },
-                new Video { Title = "CCC", CreatorID = 3, VideoID = 1213464, 
-                    ViewCount = 23144 }
-            };
-            for (int i = 0; i < VideoList.Count; i++)
-            {
-                VideoList[i].Comments.Add(CommentList[i]);
-            }
+
+
             //YTContentCreator Database default rows
             List<YTContentCreator> CreatorList = new List<YTContentCreator>()
             {
@@ -77,36 +53,59 @@ namespace G1WRGM_HFT_2021221.Data
                 new YTContentCreator { CreatorID = 2, CreatorName = "JustVidman", Creation = 2013, SubscriberCount = 692000 },
                 new YTContentCreator { CreatorID = 3, CreatorName = "Andras Horvath", Creation = 2006, SubscriberCount = 166000 }
             };
-            for (int i = 0; i < CreatorList.Count; i++)
+            
+
+            //Video Database default rows
+            List<Video> VideoList = new List<Video>()
             {
-                CreatorList[i].Videos.Add(VideoList[i]);
-            }
+                new Video { Title = "AAA", CreatorID = CreatorList[0].CreatorID, VideoID = 1,
+                    ViewCount = 312234 },
+                new Video { Title = "BBB", CreatorID = CreatorList[1].CreatorID, VideoID = 2,
+                    ViewCount = 993231 },
+                new Video { Title = "CCC", CreatorID = CreatorList[2].CreatorID, VideoID = 3,
+                    ViewCount = 23144 }
+            };
+            
+
+            //Comment Database default rows
+            List<Comment> CommentList = new List<Comment>()
+            {
+                new Comment { CommentID = 1, VideoID = VideoList[0].VideoID, Username = "Joe Bob",  
+                    Content = "HELLO JULIE ARE YOU RIGHT AND SAY PAUL BROTHER  PHILLIP NEWS SEPARATE MAY AGO FINISH OK TELL", Likes = 1 },
+                new Comment { CommentID = 2, VideoID = VideoList[1].VideoID, Username = "Emily[She/They]", 
+                    Content = "Yeah communism never worked, then explain this: http://arts.u-szeged.hu/tortenelem-180701/bevezetes-oskor", Likes = 234 },
+                new Comment { CommentID = 3, VideoID = VideoList[2].VideoID, Username = "BasedDude", 
+                    Content = "China raises concerns over male characters with feminine traits in Videogames and uses Venti as an example of a character that is problematic.", Likes = 2782 }
+            };
+
+
+            //Adding Lists
+            //for (int i = 0; i < VideoList.Count; i++)
+            //{
+            //    VideoList[i].Comments.Add(CommentList[i]);
+            //}
+            //for (int i = 0; i < CreatorList.Count; i++)
+            //{
+            //    CreatorList[i].Videos.Add(VideoList[i]);
+            //}
+
+
             //Seeding (WHY DO I NEED TO MAKE "new ClassName{...}"???)
             foreach (var item in CreatorList)
             {
-                modelBuilder.Entity<YTContentCreator>().HasData(new YTContentCreator { CreatorID = item.CreatorID, CreatorName = item.CreatorName, Creation = item.Creation, SubscriberCount = item.SubscriberCount });
+                //modelBuilder.Entity<YTContentCreator>().HasData(new YTContentCreator { CreatorID = item.CreatorID, CreatorName = item.CreatorName, Creation = item.Creation, SubscriberCount = item.SubscriberCount });
+                modelBuilder.Entity<YTContentCreator>().HasData(item);
             }
             foreach (var item in VideoList)
             {
-                modelBuilder.Entity<Video>().HasData(new Video { Title = item.Title, CreatorID = item.CreatorID, VideoID = item.VideoID });
+                //modelBuilder.Entity<Video>().HasData(new Video { Title = item.Title, CreatorID = item.CreatorID, VideoID = item.VideoID });
+                modelBuilder.Entity<Video>().HasData(item);
             }
             foreach (var item in CommentList)
             {
-                modelBuilder.Entity<Comment>().HasData(new Comment { CommentID = item.CommentID, VideoID = item.VideoID, Content = item.Content, Likes = item.Likes });
+                //modelBuilder.Entity<Comment>().HasData(new Comment { CommentID = item.CommentID, VideoID = item.VideoID, Content = item.Content, Likes = item.Likes });
+                modelBuilder.Entity<Comment>().HasData(item);
             }
-            
-            
-            //modelBuilder.Entity<YTContentCreator>().HasData(new YTContentCreator { CreatorName = "Zsdav", Creation = 2004, SubscriberCount = 222 });
-            //modelBuilder.Entity<YTContentCreator>().HasData(new YTContentCreator { CreatorName = "JustVidman", Creation = 2006 });
-            //modelBuilder.Entity<YTContentCreator>().HasData(new YTContentCreator { CreatorName = "Andras Horvath", Creation = 2005 });
-            //Video Database default rows
-            //modelBuilder.Entity<Video>().HasData(new Video { Title = "AAA", CreatorName = "Zsdav", VideoID = 4323213 });
-            //modelBuilder.Entity<Video>().HasData(new Video { Title = "BBB", CreatorName = "JustVidman", VideoID = 8956232 });
-            //modelBuilder.Entity<Video>().HasData(new Video { Title = "CCC", CreatorName = "Andras Horvath", VideoID = 1213464 });
-            //Comment Database default rows
-            //modelBuilder.Entity<Comment>().HasData(new Comment { CommentID = 31243, VideoID = 4323213, Content = "HELLO JULIE ARE YOU RIGHT AND SAY PAUL BROTHER  PHILLIP NEWS SEPARATE MAY AGO FINISH OK TELL", Likes = 1 });
-            //modelBuilder.Entity<Comment>().HasData(new Comment { CommentID = 89755, VideoID = 8956232, Content = "Yeah communism never worked, then explain this: http://arts.u-szeged.hu/tortenelem-180701/bevezetes-oskor", Likes = 234 });
-            //modelBuilder.Entity<Comment>().HasData(new Comment { CommentID = 24785, VideoID = 1213464, Content = "China raises concerns over male characters with feminine traits in Videogames and uses Venti as an example of a character that is problematic.", Likes = 2782 });
         }
     }
 }
