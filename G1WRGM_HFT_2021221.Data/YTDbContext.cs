@@ -49,33 +49,66 @@ namespace G1WRGM_HFT_2021221.Data
             //YTContentCreator Database default rows
             List<YTContentCreator> CreatorList = new List<YTContentCreator>()
             {
-                new YTContentCreator { CreatorID = 1, CreatorName = "Zsdav", Creation = 2008, SubscriberCount = 538000 },
-                new YTContentCreator { CreatorID = 2, CreatorName = "JustVidman", Creation = 2013, SubscriberCount = 692000 },
-                new YTContentCreator { CreatorID = 3, CreatorName = "Andras Horvath", Creation = 2006, SubscriberCount = 166000 }
+                new YTContentCreator { CreatorID = 1, CreatorName = "Zsdav", Creation = 2008, SubscriberCount = 540000 },
+                new YTContentCreator { CreatorID = 2, CreatorName = "JustVidman", Creation = 2013, SubscriberCount = 695000 },
+                new YTContentCreator { CreatorID = 3, CreatorName = "Andras Horvath", Creation = 2006, SubscriberCount = 166000 },
+                new YTContentCreator { CreatorID = 4, CreatorName = "Pottyondy Edina", Creation = 2013, SubscriberCount = 151000 },
+                new YTContentCreator { CreatorID = 5, CreatorName = "Chenge-chan", Creation = 2020, SubscriberCount = 1730 },
+                new YTContentCreator { CreatorID = 6, CreatorName = "StrawberrySana", Creation = 2011, SubscriberCount = 89700 }
             };
             
 
             //Video Database default rows
             List<Video> VideoList = new List<Video>()
             {
-                new Video { Title = "AAA", CreatorID = CreatorList[0].CreatorID, VideoID = 1,
-                    ViewCount = 312234 },
-                new Video { Title = "BBB", CreatorID = CreatorList[1].CreatorID, VideoID = 2,
-                    ViewCount = 993231 },
-                new Video { Title = "CCC", CreatorID = CreatorList[2].CreatorID, VideoID = 3,
-                    ViewCount = 23144 }
+                new Video { Title = "Így lesz pénzed az álmaid megvalósításához! | Katasztrofális Termékek #8",
+                    CreatorID = CreatorList[1].CreatorID, VideoID = 1, ViewCount = 495203 },
+                new Video { Title = "A reddit mélyén #1 - Búzától a szektáig", 
+                    CreatorID = CreatorList[1].CreatorID, VideoID = 2, ViewCount = 1131025 },
+                new Video { Title = "Autós kisokos", 
+                    CreatorID = CreatorList[3].CreatorID, VideoID = 3, ViewCount = 211211 },
+                new Video { Title = "Egri Csillagok Röviden",
+                    CreatorID = CreatorList[4].CreatorID, VideoID = 4, ViewCount = 6054 },
+                new Video { Title = "Natsuki ASMR - Beating You Unconscious Until You Fall Asleep",
+                    CreatorID = CreatorList[7].CreatorID, VideoID = 5, ViewCount = 38571 },
+                new Video { Title = "You Natsuki'd In The Wrong Literature Club",
+                    CreatorID = CreatorList[7].CreatorID, VideoID = 6, ViewCount = 35752 },
+                new Video { Title = "Elektromos autóval KÜLFÖLDÖN tölteni? Hát...",
+                    CreatorID = CreatorList[2].CreatorID, VideoID = 7, ViewCount = 79159 },
+                new Video { Title = "KAKI GOLYÓ!",
+                    CreatorID = CreatorList[0].CreatorID, VideoID = 8, ViewCount = 38436 },
+                new Video { Title = "VTuber Chenge-chan bemutatja: A Csillagharcos Szemű Juhász",
+                    CreatorID = CreatorList[4].CreatorID, VideoID = 9, ViewCount = 3696 },
+                new Video { Title = "ZsDav adventures: Rókák a pincémben",
+                    CreatorID = CreatorList[0].CreatorID, VideoID = 10, ViewCount = 2546764 },
+                new Video { Title = "Chenge-chan betyáros gulyáslevese",
+                    CreatorID = CreatorList[4].CreatorID, VideoID = 11, ViewCount = 7308 },
+                new Video { Title = "Ezért nem fogsz tudni autót venni. Meg mást sem…",
+                    CreatorID = CreatorList[2].CreatorID, VideoID = 12, ViewCount = 255726 },
             };
             
 
             //Comment Database default rows
             List<Comment> CommentList = new List<Comment>()
             {
-                new Comment { CommentID = 1, VideoID = VideoList[0].VideoID, Username = "Joe Bob",  
-                    Content = "HELLO JULIE ARE YOU RIGHT AND SAY PAUL BROTHER  PHILLIP NEWS SEPARATE MAY AGO FINISH OK TELL", Likes = 1 },
-                new Comment { CommentID = 2, VideoID = VideoList[1].VideoID, Username = "Emily[She/They]", 
-                    Content = "Yeah communism never worked, then explain this: http://arts.u-szeged.hu/tortenelem-180701/bevezetes-oskor", Likes = 234 },
-                new Comment { CommentID = 3, VideoID = VideoList[2].VideoID, Username = "BasedDude", 
-                    Content = "China raises concerns over male characters with feminine traits in Videogames and uses Venti as an example of a character that is problematic.", Likes = 2782 }
+                new Comment { CommentID = 1, VideoID = VideoList[10].VideoID, Username = "Chenge simp",  
+                    Content = "CHENGE-CHANT KORMÁNYZÓNAK", Likes = 99999 },
+                new Comment { CommentID = 2, VideoID = VideoList[1].VideoID, Username = "Emília[She/They]", 
+                    Content = "JustVidman best UwU", Likes = 234 },
+                new Comment { CommentID = 3, VideoID = VideoList[5].VideoID, Username = "BasedDude", 
+                    Content = "Littest song cover ever heard ngl", Likes = 67 },
+                new Comment { CommentID = 4, VideoID = VideoList[5].VideoID, Username = "Chungus Bungus",
+                    Content = "Strawberry more like Strawman", Likes = 234 },
+                new Comment { CommentID = 5, VideoID = VideoList[8].VideoID, Username = "Edit",
+                    Content = "Nálunk drágább volt a töltés", Likes = 15 },
+                new Comment { CommentID = 6, VideoID = VideoList[2].VideoID, Username = "Yasuomain",
+                    Content = "r/hungary-t kihagytad XDDDD", Likes = -46 },
+                new Comment { CommentID = 7, VideoID = VideoList[10].VideoID, Username = "Lósétáló",
+                    Content = "Kövi videó mikor lesz?", Likes = 35452 },
+                new Comment { CommentID = 8, VideoID = VideoList[9].VideoID, Username = "McGamerSquidGame",
+                    Content = "Peak Zsdav videó volt ez", Likes = 329 },
+                new Comment { CommentID = 9, VideoID = VideoList[5].VideoID, Username = "YukoRetina",
+                    Content = "When the Impostor is NOT SUS", Likes = 26 }
             };
 
 

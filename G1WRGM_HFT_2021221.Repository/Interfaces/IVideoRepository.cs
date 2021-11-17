@@ -9,5 +9,8 @@ namespace G1WRGM_HFT_2021221.Repository.Interfaces
 {
     public interface IVideoRepository : IRepository<Video>
     {
+        public IQueryable<Video> VideosWithZeroComments();
+        public Comment MostLikedComment(int id);
+
     }
 }

@@ -9,5 +9,6 @@ namespace G1WRGM_HFT_2021221.Repository.Interfaces
 {
     public interface ICommentRepository : IRepository<Comment>
     {
+        public double GetViewsPerLikeRatio(int id);
     }
 }
