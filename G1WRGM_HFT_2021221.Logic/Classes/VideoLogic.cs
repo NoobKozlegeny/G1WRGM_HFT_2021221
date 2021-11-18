@@ -40,5 +40,24 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
         {
             videoRepo.Update(content);
         }
+
+        //NON-CRUD
+        public IEnumerable<Comment> FirstXMostLikedCommentFromVideo(int id, int X)
+        {
+            try
+            {
+                return videoRepo.ReadAll().Where(x => x.VideoID == id).SelectMany(x => x.Comments).OrderByDescending(x => x.Likes).Take(X);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                Console.WriteLine("ERROR-FirstXMostLikedCommentFromVideo: Less comments than X to take out.");
+                return null;
+            }
+        }
+
+        public IEnumerable<Video> VideosWithZeroComments()
+        {
+            return videoRepo.ReadAll().Where(x => x.Comments.Count == 0);
+        }
     }
 }

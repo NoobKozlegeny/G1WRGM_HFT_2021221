@@ -17,7 +17,7 @@ namespace G1WRGM_HFT_2021221.Logic.Interfaces
         public void Delete(int id); //D
 
         //NON-CRUD
-        public IList<Video> VideosWithZeroComments();
-        public Comment MostLikedComment(int id);
+        public IEnumerable<Video> VideosWithZeroComments();
+        public IEnumerable<Comment> FirstXMostLikedCommentFromVideo(int id, int X);
     }
 }

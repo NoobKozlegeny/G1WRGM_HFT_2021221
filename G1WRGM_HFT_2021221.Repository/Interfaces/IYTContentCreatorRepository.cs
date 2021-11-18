@@ -11,7 +11,7 @@ namespace G1WRGM_HFT_2021221.Repository.Interfaces
     public interface IYTContentCreatorRepository : IRepository<YTContentCreator>
     {
         public void ChangeSubscriberCount(int id, int newCount);
-        public int AllViewsPerYoutuber(int id);
-        public IQueryable<YTContentCreator> AllNegativeCommentsFromYoutuber(int id);
+        //public IEnumerable<Video> VideosWithMoreThanXViewsFromYoutuber(int id, int X);
+        //public IEnumerable<Comment> AllNegativeCommentsFromYoutuber(int id);
     }
 }

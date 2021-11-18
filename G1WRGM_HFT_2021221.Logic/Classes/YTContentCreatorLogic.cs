@@ -19,6 +19,23 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
         }
 
         //NON-CRUD
+        public IEnumerable<Comment> GetAllNegativeCommentsFromYoutuber(int id)
+        {
+            return ytccRepo.ReadAll().Where(x => x.CreatorID == id).SelectMany(x => x.Videos)
+                .Where(x => x.CreatorID == id).SelectMany(x => x.Comments).Where(x => x.Likes < 0);
+        }
+
+        public IEnumerable<Video> VideosWithMoreThanXViewsFromYoutuber(int id, int X)
+        {
+            return ytccRepo.ReadAll().Where(x => x.CreatorID == id).SelectMany(x => x.Videos)
+                .Where(x => x.ViewCount > X);
+        }
+        public IEnumerable<Comment> GetLongestCommentsPerYoutuber()
+        {
+            //IEnumerable<int> allView = ytccRepo.ReadAll().Select(x => x.Videos.Sum(y => y.ViewCount));
+            return ytccRepo.ReadAll().SelectMany(x => x.Videos).SelectMany(y => y.Comments).OrderBy(z => z.Content.Length);
+        }
+
         public void ChangeSubscriberCount(int id, int newCount)
         {
             ytccRepo.ChangeSubscriberCount(id, newCount);
@@ -49,5 +66,7 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
         {
             ytccRepo.Update(content);
         }
+
+        
     }
 }

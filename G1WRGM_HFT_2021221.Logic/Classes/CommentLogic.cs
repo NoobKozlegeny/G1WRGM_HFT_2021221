@@ -40,11 +40,5 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
         {
             commentRepo.Update(content);
         }
-
-        //NON-CRUD
-        public double GetViewsPerLikeRatio(int id)
-        {
-            return commentRepo.GetViewsPerLikeRatio(id);
-        }
     }
 }
