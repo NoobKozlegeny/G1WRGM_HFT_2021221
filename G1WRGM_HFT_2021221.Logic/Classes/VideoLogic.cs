@@ -18,7 +18,14 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
         }
         public void Create(Video content)
         {
-            videoRepo.Create(content);
+            if (content != null && content.Title.Length > 0)
+            {
+                videoRepo.Create(content);
+            }
+            else
+            {
+                throw new Exception("Dude, add a title, or I'm gonna call your mom");
+            }
         }
 
         public void Delete(int id)
@@ -38,7 +45,14 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
 
         public void Update(Video content)
         {
-            videoRepo.Update(content);
+            if (content != null && content.Title.Length > 0)
+            {
+                videoRepo.Update(content);
+            }
+            else
+            {
+                throw new Exception("Do you want me to take the Geneva rules as Geneva suggestions?");
+            }
         }
 
         //NON-CRUD
@@ -55,9 +69,12 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
             }
         }
 
-        public IEnumerable<Video> VideosWithZeroComments()
+        public IEnumerable<KeyValuePair<string, Video>> GetMostWatchedVideoPerYoutubers()
         {
-            return videoRepo.ReadAll().Where(x => x.Comments.Count == 0);
+            return from x in videoRepo.ReadAll()
+                   group x by x.YTContentCreator.CreatorName into g
+                   select new KeyValuePair<string, Video>
+                   (g.Key, g.OrderByDescending(y=>y.ViewCount).First());
         }
     }
 }

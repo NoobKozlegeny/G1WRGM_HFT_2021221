@@ -21,8 +21,10 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
         //NON-CRUD
         public IEnumerable<Comment> GetAllNegativeCommentsFromYoutuber(int id)
         {
-            return ytccRepo.ReadAll().Where(x => x.CreatorID == id).SelectMany(x => x.Videos)
-                .Where(x => x.CreatorID == id).SelectMany(x => x.Comments).Where(x => x.Likes < 0);
+            var r1 = ytccRepo.ReadAll().Where(x => x.CreatorID == id);
+            var r2 = r1.SelectMany(x => x.Videos).Where(x => x.CreatorID == id);
+            var r3 = r2.SelectMany(x => x.Comments).Where(x => x.Likes < 0);
+            return r3;
         }
 
         public IEnumerable<Video> VideosWithMoreThanXViewsFromYoutuber(int id, int X)
@@ -30,10 +32,10 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
             return ytccRepo.ReadAll().Where(x => x.CreatorID == id).SelectMany(x => x.Videos)
                 .Where(x => x.ViewCount > X);
         }
-        public IEnumerable<Comment> GetLongestCommentsPerYoutuber()
+        public IEnumerable<Video> GetVideosWithCommentsFromYoutuber(int id)
         {
-            //IEnumerable<int> allView = ytccRepo.ReadAll().Select(x => x.Videos.Sum(y => y.ViewCount));
-            return ytccRepo.ReadAll().SelectMany(x => x.Videos).SelectMany(y => y.Comments).OrderBy(z => z.Content.Length);
+            return ytccRepo.ReadAll().Where(x => x.CreatorID == id).SelectMany(x => x.Videos)
+                .Where(x => x.Comments.Count != 0);
         }
 
         public void ChangeSubscriberCount(int id, int newCount)
@@ -44,7 +46,14 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
         //CRUD
         public void Create(YTContentCreator content)
         {
-            ytccRepo.Create(content);
+            if (content != null && content.CreatorName.Length > 0)
+            {
+                ytccRepo.Create(content);
+            }
+            else
+            {
+                throw new Exception("Dude, add a CreatorName, or I'm gonna call your mom");
+            }
         }
 
         public void Delete(int id)
@@ -59,12 +68,20 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
 
         public IList<YTContentCreator> ReadAll()
         {
-            return ytccRepo.ReadAll().ToList();
+            var result = ytccRepo.ReadAll().ToList();
+            return result;
         }
 
         public void Update(YTContentCreator content)
         {
-            ytccRepo.Update(content);
+            if (content != null && content.CreatorName.Length > 0)
+            {
+                ytccRepo.Update(content);
+            }
+            else
+            {
+                throw new Exception("Do you want me to take the Geneva rules as Geneva suggestions?");
+            }
         }
 
         

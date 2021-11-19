@@ -17,7 +17,7 @@ namespace G1WRGM_HFT_2021221.Logic.Interfaces
         public void Delete(int id); //D
 
         //NON-CRUD
-        public IEnumerable<Video> VideosWithZeroComments();
+        public IEnumerable<KeyValuePair<string, Video>> GetMostWatchedVideoPerYoutubers();
         public IEnumerable<Comment> FirstXMostLikedCommentFromVideo(int id, int X);
     }
 }

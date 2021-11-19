@@ -18,7 +18,15 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
         }
         public void Create(Comment content)
         {
-            commentRepo.Create(content);
+            if (content != null && content.Content.Length > 0)
+            {
+                commentRepo.Create(content);
+            }
+            else
+            {
+                throw new Exception("Dude, add a comment, or I'm gonna call your mom");
+            }
+            
         }
 
         public void Delete(int id)
@@ -38,7 +46,14 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
 
         public void Update(Comment content)
         {
-            commentRepo.Update(content);
+            if (content != null && content.Content.Length > 0)
+            {
+                commentRepo.Update(content);
+            }
+            else
+            {
+                throw new Exception("Do you want me to take the Geneva rules as Geneva suggestions?");
+            }
         }
     }
 }
