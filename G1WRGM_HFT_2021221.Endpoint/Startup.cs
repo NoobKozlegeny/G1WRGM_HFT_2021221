@@ -31,7 +31,7 @@ namespace G1WRGM_HFT_2021221.Endpoint
             services.AddTransient<IVideoRepository, VideoRepository>();
             services.AddTransient<IYTContentCreatorRepository, YTContentCreatorRepository>();
             //DbContext
-            services.AddTransient<YTDbContext, YTDbContext>();
+            services.AddTransient<YTDbContext, YTDbContext>(); //<DbContext, YTDbContext> ha hiba lesz
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
