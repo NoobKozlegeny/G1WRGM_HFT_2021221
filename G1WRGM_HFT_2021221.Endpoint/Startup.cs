@@ -1,3 +1,7 @@
+using G1WRGM_HFT_2021221.Logic.Classes;
+using G1WRGM_HFT_2021221.Logic.Interfaces;
+using G1WRGM_HFT_2021221.Repository.Classes;
+using G1WRGM_HFT_2021221.Repository.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +20,12 @@ namespace G1WRGM_HFT_2021221.Endpoint
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+
+            services.AddTransient<ICommentLogic, CommentLogic>();
+            services.AddTransient<ICommentRepository, CommentRepository>();
+            services.AddTransient<IVideoRepository, VideoRepository>();
+            services.AddTransient<IYTContentCreatorRepository, YTContentCreatorRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,11 +40,7 @@ namespace G1WRGM_HFT_2021221.Endpoint
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("According to YouTube statistics, only a small percentage of people who watch my videos are actually subscribed." +
-                        " So if you end up liking this video, consider subscribing. It's free and you can always unsubscribe. Enjoy the video.");
-                });
+                endpoints.MapControllers();
             });
         }
     }
