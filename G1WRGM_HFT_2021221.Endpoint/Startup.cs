@@ -1,3 +1,4 @@
+using G1WRGM_HFT_2021221.Data;
 using G1WRGM_HFT_2021221.Logic.Classes;
 using G1WRGM_HFT_2021221.Logic.Interfaces;
 using G1WRGM_HFT_2021221.Repository.Classes;
@@ -21,11 +22,16 @@ namespace G1WRGM_HFT_2021221.Endpoint
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            //Logic
             services.AddTransient<ICommentLogic, CommentLogic>();
+            services.AddTransient<IVideoLogic, VideoLogic>();
+            services.AddTransient<IYTContentCreatorLogic, YTContentCreatorLogic>();
+            //Repo
             services.AddTransient<ICommentRepository, CommentRepository>();
             services.AddTransient<IVideoRepository, VideoRepository>();
             services.AddTransient<IYTContentCreatorRepository, YTContentCreatorRepository>();
+            //DbContext
+            services.AddTransient<YTDbContext, YTDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
