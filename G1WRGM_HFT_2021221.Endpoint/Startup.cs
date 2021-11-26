@@ -6,6 +6,7 @@ using G1WRGM_HFT_2021221.Repository.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -31,6 +32,7 @@ namespace G1WRGM_HFT_2021221.Endpoint
             services.AddTransient<IVideoRepository, VideoRepository>();
             services.AddTransient<IYTContentCreatorRepository, YTContentCreatorRepository>();
             //DbContext
+            //services.AddSingleton<DbContext, YTDbContext>();
             services.AddTransient<YTDbContext, YTDbContext>(); //<DbContext, YTDbContext> ha hiba lesz
         }
 

@@ -1,30 +1,30 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:20094",
+      "applicationUrl": "http://localhost:42069",
       "sslPort": 0
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
+      "launchUrl": "ytcontentcreator",
       "launchBrowser": true,
-      "launchUrl": "yt",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "G1WRGM_HFT_2021221.Endpoint": {
       "commandName": "Project",
-      "dotnetRunMessages": "true",
+      "launchUrl": "ytcontentcreator",
       "launchBrowser": true,
-      "launchUrl": "yt",
-      "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "dotnetRunMessages": "true",
+      "applicationUrl": "http://localhost:5000"
     }
   }
 }

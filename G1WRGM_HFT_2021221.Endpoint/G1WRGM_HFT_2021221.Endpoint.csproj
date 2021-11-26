@@ -21,8 +21,4 @@
     <ProjectReference Include="..\G1WRGM_HFT_2021221.Repository\G1WRGM_HFT_2021221.Repository.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
