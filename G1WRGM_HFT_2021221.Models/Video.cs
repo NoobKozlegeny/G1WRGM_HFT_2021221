@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace G1WRGM_HFT_2021221.Models
@@ -18,6 +19,7 @@ namespace G1WRGM_HFT_2021221.Models
         [ForeignKey(nameof(YTContentCreator))]
         public int CreatorID { get; set; }
         [NotMapped]
+        [JsonIgnore]
         public virtual YTContentCreator YTContentCreator { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public int ViewCount { get; set; }

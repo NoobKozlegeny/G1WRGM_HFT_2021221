@@ -41,8 +41,8 @@ namespace G1WRGM_HFT_2021221.Endpoint.Controllers
             ytcc.Create(value);
         }
 
-        // PUT /ytcontentcreator/5
-        [HttpPut("{id}")]
+        // PUT /ytcontentcreator
+        [HttpPut]
         public void Put([FromBody] YTContentCreator value)
         {
             ytcc.Update(value);

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace G1WRGM_HFT_2021221.Models
@@ -16,6 +17,7 @@ namespace G1WRGM_HFT_2021221.Models
         [ForeignKey(nameof(Video))]
         public int VideoID { get; set; }
         [NotMapped]
+        [JsonIgnore]
         public virtual Video Video { get; set; }
         [MaxLength(200)]
         public string Username { get; set; } //Potentional 4th table?
