@@ -119,6 +119,8 @@ namespace G1WRGM_HFT_2021221.Test
             mockYtccRepo.Setup((t) => t.ReadAll()).Returns(ytccs.AsQueryable());
             mockVideoRepo.Setup((t) => t.ReadAll()).Returns(videos.AsQueryable());
             mockCommentRepo.Setup((t) => t.ReadAll()).Returns(comments);
+
+            mockYtccRepo.Setup((t) => t.Read(1)).Returns(ytcc1);
             
             ytccLogic = new YTContentCreatorLogic(mockYtccRepo.Object);
             videoLogic = new VideoLogic(mockVideoRepo.Object);
@@ -177,6 +179,23 @@ namespace G1WRGM_HFT_2021221.Test
             Assert.Throws<Exception>(() => ytccLogic.Create(ytcc));
         }
 
+        [Test]
+        public void CreateForYTContentCreatorLogicTestWhichWontThrow()
+        {
+            //ARRANGE
+            YTContentCreator ytccTest = new YTContentCreator() //Is this hidden dependency?
+            {
+                Creation = 2019,
+                CreatorID = 3,
+                CreatorName = "LolBoi",
+                SubscriberCount = 9943543
+                //Videos = 
+            };
+            //ACT
+            //ASSERT
+            Assert.That(() => ytccLogic.Create(ytccTest), Throws.Nothing);
+        }
+
         [TestCase(null)]
         public void Update(YTContentCreator content)
         {
@@ -194,6 +213,17 @@ namespace G1WRGM_HFT_2021221.Test
             //ACT
             IEnumerable<Comment> result = videoLogic.FirstXMostLikedCommentFromVideo(id, X);
             List<Comment> expected = new List<Comment>() { commentsList[0] };
+            //ASSERT
+            Assert.AreEqual(result.ToList(), expected);
+        }
+
+        [TestCase(1, 99)]
+        public void FirstXMostLikedCommentFromVideoWhereXIsLargerThanAllAvalaibleComments(int id, int X)
+        {
+            //ARRANGE
+            //ACT
+            IEnumerable<Comment> result = videoLogic.FirstXMostLikedCommentFromVideo(id, X);
+            List<Comment> expected = new List<Comment>() { commentsList[0], commentsList[1] };
             //ASSERT
             Assert.AreEqual(result.ToList(), expected);
         }
@@ -219,6 +249,23 @@ namespace G1WRGM_HFT_2021221.Test
             Assert.Throws<Exception>(() => videoLogic.Create(video));
         }
 
+        [Test]
+        public void CreateForVideoLogicWhichWontThrow()
+        {
+            //ARRANGE
+            Video vTest = new Video() //Is this hidden dependency?
+            {
+                Title = "Video LOLLLLLL",
+                VideoID = 3,
+                //CreatorID = null,
+                ViewCount = 33023,
+                //YTContentCreator = null
+            };
+            //ACT
+            //ASSERT
+            Assert.That(() => videoLogic.Create(vTest), Throws.Nothing);
+        }
+
         [TestCase(null)]
         public void Update(Video content)
         {
@@ -229,15 +276,15 @@ namespace G1WRGM_HFT_2021221.Test
         }
 
         //Comment
-        Comment c1 = new Comment()
-        {
-            CommentID = 4,
-            VideoID = 2,
-            Content = "fsdsdfgs",
-            Likes = -341,
-            Username = "Polyboi",
-            Video = null
-        };
+        //Comment c1 = new Comment()
+        //{
+        //    CommentID = 4,
+        //    VideoID = 2,
+        //    Content = "fsdsdfgs",
+        //    Likes = -341,
+        //    Username = "Polyboi",
+        //    Video = null
+        //};
 
         [TestCase(null)]
         public void CreateForCommentLogicTest(Comment comment)

@@ -41,7 +41,7 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
 
         public override YTContentCreator Read(int id)
         {
-            return db.YTContentCreators.FirstOrDefault(x=>x.CreatorID == id);
+            return db.YTContentCreators.First(x=>x.CreatorID == id);
         }
 
         public override IQueryable<YTContentCreator> ReadAll() //GetAll csak ReadAll a neve, mert így logikusabb
