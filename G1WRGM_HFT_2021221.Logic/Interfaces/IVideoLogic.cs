@@ -18,6 +18,6 @@ namespace G1WRGM_HFT_2021221.Logic.Interfaces
 
         //NON-CRUD
         public IEnumerable<KeyValuePair<string, Video>> GetMostWatchedVideoPerYoutubers();
-        public IEnumerable<Comment> FirstXMostLikedCommentFromVideo(int id, int X);
+        public IEnumerable<Comment> First3MostLikedCommentFromVideo(int id);
     }
 }

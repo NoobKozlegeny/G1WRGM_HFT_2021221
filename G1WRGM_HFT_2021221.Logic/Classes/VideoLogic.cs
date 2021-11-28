@@ -56,9 +56,9 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
         }
 
         //NON-CRUD
-        public IEnumerable<Comment> FirstXMostLikedCommentFromVideo(int id, int X)
+        public IEnumerable<Comment> First3MostLikedCommentFromVideo(int id)
         {
-             return videoRepo.ReadAll().Where(x => x.VideoID == id).SelectMany(x => x.Comments).OrderByDescending(x => x.Likes).Take(X);
+             return videoRepo.ReadAll().Where(x => x.VideoID == id).SelectMany(x => x.Comments).OrderByDescending(x => x.Likes).Take(3);
         }
 
         public IEnumerable<KeyValuePair<string, Video>> GetMostWatchedVideoPerYoutubers()

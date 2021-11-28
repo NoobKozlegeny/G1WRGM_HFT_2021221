@@ -30,9 +30,9 @@ namespace G1WRGM_HFT_2021221.Endpoint.Controllers
 
         // GET: /stat/vidmorexviews/5
         [HttpGet]
-        public IEnumerable<Video> VideosWithMoreThanXViewsFromYoutuber(int id, int X)
+        public IEnumerable<Video> VideosWithMoreThan30KViewsFromYoutuber(int id)
         {
-            return ytccl.VideosWithMoreThanXViewsFromYoutuber(id, X);
+            return ytccl.VideosWithMoreThan30KViewsFromYoutuber(id);
         }
 
         // GET: /stat/vidwithmorecomm/5
@@ -47,6 +47,20 @@ namespace G1WRGM_HFT_2021221.Endpoint.Controllers
         public void ChangeSubscriberCount(int id, int newCount)
         {
             ytccl.ChangeSubscriberCount(id, newCount);
+        }
+
+        // GET: /stat/first3/5
+        [HttpGet]
+        public IEnumerable<Comment> First3MostLikedCommentFromVideo(int id)
+        {
+            return vl.First3MostLikedCommentFromVideo(id);
+        }
+
+        // GET: /stat/mostwatched/5
+        [HttpGet]
+        public IEnumerable<KeyValuePair<string, Video>> GetMostWatchedVideoPerYoutubers()
+        {
+            return vl.GetMostWatchedVideoPerYoutubers();
         }
     }
 }

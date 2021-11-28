@@ -145,16 +145,15 @@ namespace G1WRGM_HFT_2021221.Test
             Assert.AreEqual(result.First().Likes, -11);
         }
 
-        [TestCase(1, 3000)]
-        [TestCase(1, int.MaxValue)]
-        public void VideosWithMoreThanXViewsFromYoutuberTest(int id, int X)
+        [TestCase(1)]
+        public void VideosWithMoreThan30KViewsFromYoutuberTest(int id)
         {
             //ARRANGE
 
             //ACT
-            IEnumerable<Video> result = ytccLogic.VideosWithMoreThanXViewsFromYoutuber(id, X);
+            IEnumerable<Video> result = ytccLogic.VideosWithMoreThan30KViewsFromYoutuber(id);
             List<Video> expected = new List<Video>();
-            if (X == 3000) { expected = videosList; }
+            expected.Add(videosList[0]);
             //ASSERT
             Assert.AreEqual(result.ToList(), expected);
         }
@@ -206,24 +205,13 @@ namespace G1WRGM_HFT_2021221.Test
         }
 
         //Video
-        [TestCase(1,1)]
-        public void FirstXMostLikedCommentFromVideo(int id, int X)
+        [TestCase(1)]
+        public void FirstXMostLikedCommentFromVideo(int id)
         {
             //ARRANGE
             //ACT
-            IEnumerable<Comment> result = videoLogic.FirstXMostLikedCommentFromVideo(id, X);
+            IEnumerable<Comment> result = videoLogic.First3MostLikedCommentFromVideo(id);
             List<Comment> expected = new List<Comment>() { commentsList[0] };
-            //ASSERT
-            Assert.AreEqual(result.ToList(), expected);
-        }
-
-        [TestCase(1, 99)]
-        public void FirstXMostLikedCommentFromVideoWhereXIsLargerThanAllAvalaibleComments(int id, int X)
-        {
-            //ARRANGE
-            //ACT
-            IEnumerable<Comment> result = videoLogic.FirstXMostLikedCommentFromVideo(id, X);
-            List<Comment> expected = new List<Comment>() { commentsList[0], commentsList[1] };
             //ASSERT
             Assert.AreEqual(result.ToList(), expected);
         }

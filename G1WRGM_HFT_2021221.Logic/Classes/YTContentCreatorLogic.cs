@@ -27,10 +27,10 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
             return r3;
         }
 
-        public IEnumerable<Video> VideosWithMoreThanXViewsFromYoutuber(int id, int X)
+        public IEnumerable<Video> VideosWithMoreThan30KViewsFromYoutuber(int id)
         {
             return ytccRepo.ReadAll().Where(x => x.CreatorID == id).SelectMany(x => x.Videos)
-                .Where(x => x.ViewCount > X);
+                .Where(x => x.ViewCount > 30000);
         }
         public IEnumerable<Video> GetVideosWithCommentsFromYoutuber(int id)
         {

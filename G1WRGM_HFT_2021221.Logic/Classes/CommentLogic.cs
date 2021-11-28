@@ -18,15 +18,14 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
         }
         public void Create(Comment content)
         {
-            if (content != null && content.Content.Length > 0)
+            try
             {
                 commentRepo.Create(content);
             }
-            else
+            catch (NullReferenceException)
             {
-                throw new Exception("Dude, add a comment, or I'm gonna call your mom");
+
             }
-            
         }
 
         public void Delete(int id)

@@ -28,7 +28,8 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
 
         public override void Delete(int id)
         {
-            db.Comments.Remove(Read(id));
+            var toDelete = Read(id);
+            db.Comments.Remove(toDelete);
             db.SaveChanges();
         }
 
