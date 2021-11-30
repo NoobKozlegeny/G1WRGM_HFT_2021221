@@ -36,7 +36,7 @@ namespace G1WRGM_HFT_2021221.Endpoint.Controllers
 
         // POST /ytcontentcreator
         [HttpPost]
-        public void Post([FromBody] YTContentCreator value)
+        public void Post([FromBody] YTContentCreator value) //Stackoverflow says that Post should update, if not then create and PUT should be the creator.
         {
             ytcc.Create(value);
         }
