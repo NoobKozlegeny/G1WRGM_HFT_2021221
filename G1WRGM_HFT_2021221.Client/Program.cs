@@ -16,14 +16,14 @@ namespace G1WRGM_HFT_2021221.Client
 
             
 
-            var ytcreators = rest.Get<Video>("video");
-            var first3 = rest.Get<Video>("/stat/first3/5");
+            //var ytcreators = rest.Get<Video>("video");
+            //var first3 = rest.Get<Video>("/stat/first3/5");
 
-            YTContentCreator ytTest = new YTContentCreator { CreatorID = 7, CreatorName = "Boiii", Creation = 2021, SubscriberCount = 999, Videos = new List<Video>() };
-            Video vTest = new Video { CreatorID = 7, YTContentCreator = ytTest, Title = "Video Title", VideoID = 13, Comments = new List<Comment>() };
-            Comment cTest = new Comment { VideoID = 4, CommentID = 10, Content = "Commentttttt", Username = "Cheesyboi", Likes = 222 }; //Video = vTest
-            vTest.Comments.Add(cTest);
-            ytTest.Videos.Add(vTest);
+            //YTContentCreator ytTest = new YTContentCreator { CreatorID = 7, CreatorName = "Boiii", Creation = 2021, SubscriberCount = 999, Videos = new List<Video>() };
+            //Video vTest = new Video { CreatorID = 7, YTContentCreator = ytTest, Title = "Video Title", VideoID = 13, Comments = new List<Comment>() };
+            //Comment cTest = new Comment { VideoID = 4, CommentID = 10, Content = "Commentttttt", Username = "Cheesyboi", Likes = 222 }; //Video = vTest
+            //vTest.Comments.Add(cTest);
+            //ytTest.Videos.Add(vTest);
 
 
             //rest.Post<Comment>(new Comment { VideoID = 8, Content= "Hello there", Username="VROOMVROOM"}, "comment"); //Works
@@ -51,6 +51,8 @@ namespace G1WRGM_HFT_2021221.Client
                 Console.WriteLine("\t3: GET (R) -- JSON DESERIALIZE EXCEPTION"); //R
                 Console.WriteLine("\t4: PUT (U)"); //U
                 Console.WriteLine("\t5: DELETE (D)"); //D
+                Console.WriteLine("----------------");
+                Console.WriteLine("\t6: First3MostLikedCommentFromVideo");
 
                 int result = 0;
                 while (result == 0)
@@ -85,6 +87,8 @@ namespace G1WRGM_HFT_2021221.Client
                     PUT(); break;
                 case 5:
                     DELETE(); break;
+                case 6:
+                    FIRST3(); break;
                 default:
                     break;
             }
@@ -352,6 +356,28 @@ namespace G1WRGM_HFT_2021221.Client
                 default:
                     break;
             }
+        }
+
+        //NON-CRUDS
+
+        static void FIRST3()
+        {
+            int id = 0;
+            while (id == 0)
+            {
+                try
+                {
+                    Console.Write("Choose a VideoID: ");
+                    id = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine();
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Please try this again:");
+                }
+            }
+
+            rest.Get<Video>($"/stat/first3/{id}");
         }
     }
 }
