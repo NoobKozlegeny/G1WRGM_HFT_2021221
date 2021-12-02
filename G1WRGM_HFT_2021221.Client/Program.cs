@@ -267,7 +267,7 @@ namespace G1WRGM_HFT_2021221.Client
                     break;
             }
         }
-        static void PUT()
+        static void PUT() //Comment gets updated however YT and Video doesn't
         {
             Console.WriteLine("Please choose one form these:");
             Console.WriteLine("\t1: Youtuber");
@@ -296,6 +296,7 @@ namespace G1WRGM_HFT_2021221.Client
                     Console.Write("Name: "); ytcc.CreatorName = Console.ReadLine();
                     Console.Write("Creation Date: "); ytcc.Creation = Convert.ToInt32(Console.ReadLine());
                     Console.Write("Subscriber: "); ytcc.SubscriberCount = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("CreatorID: "); ytcc.CreatorID = Convert.ToInt32(Console.ReadLine());
                     ytcc.Videos = new List<Video>();
                     Console.WriteLine();
 
@@ -306,8 +307,8 @@ namespace G1WRGM_HFT_2021221.Client
                     Video video = new Video();
                     Console.Write("Title: "); video.Title = Console.ReadLine();
                     Console.Write("Views: "); video.ViewCount = Convert.ToInt32(Console.ReadLine());
-                    Console.Write("To which Youtuber (add CreatorID): ");
-                    video.CreatorID = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("VideoID: ");
+                    video.VideoID = Convert.ToInt32(Console.ReadLine());
                     video.Comments = new List<Comment>();
                     Console.WriteLine();
 
@@ -318,8 +319,8 @@ namespace G1WRGM_HFT_2021221.Client
                     Comment comment = new Comment();
                     Console.Write("Username: "); comment.Username = Console.ReadLine();
                     Console.Write("Content: "); comment.Content = Console.ReadLine();
-                    Console.Write("To which Video (add VideoID): ");
-                    comment.VideoID = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("CommentID: ");
+                    comment.CommentID = Convert.ToInt32(Console.ReadLine());
                     Console.Write("Likes: "); comment.Likes = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine();
 
@@ -329,7 +330,7 @@ namespace G1WRGM_HFT_2021221.Client
                 default:
                     break;
             }
-        } //Doesn't work
+        }
         static void DELETE()
         {
             Console.WriteLine("Please choose one form these:");
@@ -386,7 +387,7 @@ namespace G1WRGM_HFT_2021221.Client
             }
         }
 
-        //NON-CRUDS (These can't get values but they work in unit tests tho)
+        //NON-CRUDS
 
         static void FIRST3()
         {
@@ -406,12 +407,14 @@ namespace G1WRGM_HFT_2021221.Client
             }
 
             var result = rest.Get<Comment>($"/stat/first3mostlikedcommentfromvideo/{id}");
-            result.ForEach(x => Console.WriteLine(x));
+            result.ForEach(x => Console.WriteLine($"\t\tCommentID: {x.CommentID}, Username: {x.Username}, Content: {x.Content}, Likes: {x.Likes}"));
         }
         static void MOSTWATCHEDPERYOUTUBERS()
         {
-            var result = rest.Get<Video>($"/stat/getmostwatchedvideoperyoutubers");
-            ;
+            foreach (var vid in rest.Get<Video>($"/stat/getmostwatchedvideoperyoutubers"))
+            {
+                Console.WriteLine($"\tVideoID: {vid.VideoID}, Title: {vid.Title}, Views: {vid.ViewCount}");
+            }
         }
         static void ALLNEGATIVECOMMENTS()
         {
@@ -430,8 +433,10 @@ namespace G1WRGM_HFT_2021221.Client
                 }
             }
 
-            var result = rest.Get<Comment>($"/stat/allnegcommsfromytber/{id}");
-            ;
+            foreach (var com in rest.Get<Comment>($"/stat/allnegcommsfromytber/{id}"))
+            {
+                Console.WriteLine($"\t\tCommentID: {com.CommentID}, Username: {com.Username}, Content: {com.Content}, Likes: {com.Likes}");
+            }
         }
         static void VIDEOSWITHMORETHAN30KVIEWSFROMYTBER()
         {
@@ -450,8 +455,10 @@ namespace G1WRGM_HFT_2021221.Client
                 }
             }
 
-            var result = rest.Get<Video>($"/stat/videoswithmorethan30kviewsfromyoutuber/{id}");
-            ;
+            foreach (var vid in rest.Get<Video>($"/stat/videoswithmorethan30kviewsfromyoutuber/{id}"))
+            {
+                Console.WriteLine($"\tVideoID: {vid.VideoID}, Title: {vid.Title}, Views: {vid.ViewCount}");
+            }
         }
         static void VIDEOSWITHCOMMENTSFROMYTBER()
         {
@@ -471,12 +478,14 @@ namespace G1WRGM_HFT_2021221.Client
                 }
             }
 
-            var result = rest.Get<Video>($"/stat/getvideoswithcommentsfromyoutuber/{id}");
-            ;
+            foreach (var vid in rest.Get<Video>($"/stat/getvideoswithcommentsfromyoutuber/{id}"))
+            {
+                Console.WriteLine($"VideoID: {vid.VideoID}, Title: {vid.Title}, Views: {vid.ViewCount}");
+            }
         }
         static void MOSTLIKEDCOMMENTSPERVIDEOS()
         {
-            foreach (var vid in rest.Get<Comment>($"/stat/getmostlikescommentsfromvideos"))
+            foreach (var vid in rest.Get<Video>($"/stat/getmostlikescommentsfromvideos"))
             {
                 Console.WriteLine($"\tVideoID: {vid.VideoID}, Title: {vid.Title}, Views: {vid.ViewCount}");
                 foreach (var com in vid.Comments)

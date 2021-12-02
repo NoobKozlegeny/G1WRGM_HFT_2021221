@@ -47,7 +47,10 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
         public override void Update(Comment comment) //The PUT problem arises here.
         {
             Comment commentToUpdate = Read(comment.CommentID);
-            commentToUpdate = comment;
+            commentToUpdate.Username = comment.Username;
+            commentToUpdate.Content = comment.Content;
+            commentToUpdate.Likes = comment.Likes;
+            
             db.SaveChanges();
         }
 

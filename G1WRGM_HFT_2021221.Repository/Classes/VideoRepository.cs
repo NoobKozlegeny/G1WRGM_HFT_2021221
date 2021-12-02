@@ -45,7 +45,8 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
         public override void Update(Video video)
         {
             Video videoToUpdate = Read(video.VideoID);
-            videoToUpdate = video;
+            videoToUpdate.Title = video.Title;
+            videoToUpdate.ViewCount = video.ViewCount;
             db.SaveChanges();
         }
     }

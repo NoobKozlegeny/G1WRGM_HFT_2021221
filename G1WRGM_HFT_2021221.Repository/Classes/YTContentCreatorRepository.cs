@@ -52,7 +52,9 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
         public override void Update(YTContentCreator contentCreator)
         {
             YTContentCreator contentCreatorInDireNeedForUpdating = Read(contentCreator.CreatorID);
-            contentCreatorInDireNeedForUpdating = contentCreator;
+            contentCreatorInDireNeedForUpdating.CreatorName = contentCreator.CreatorName;
+            contentCreatorInDireNeedForUpdating.Creation = contentCreator.Creation;
+            contentCreator.SubscriberCount = contentCreator.SubscriberCount;
             db.SaveChanges();
         }
 
