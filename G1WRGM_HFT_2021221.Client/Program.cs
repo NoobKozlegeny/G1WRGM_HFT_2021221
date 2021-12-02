@@ -10,29 +10,12 @@ namespace G1WRGM_HFT_2021221.Client
     class Program
     {
         static RestService rest = new RestService("http://localhost:42069");
+
         static void Main(string[] args)
         {
             System.Threading.Thread.Sleep(8000);
 
-            
 
-            //var ytcreators = rest.Get<Video>("video");
-            //var first3 = rest.Get<Video>("/stat/first3/5");
-
-            //YTContentCreator ytTest = new YTContentCreator { CreatorID = 7, CreatorName = "Boiii", Creation = 2021, SubscriberCount = 999, Videos = new List<Video>() };
-            //Video vTest = new Video { CreatorID = 7, YTContentCreator = ytTest, Title = "Video Title", VideoID = 13, Comments = new List<Comment>() };
-            //Comment cTest = new Comment { VideoID = 4, CommentID = 10, Content = "Commentttttt", Username = "Cheesyboi", Likes = 222 }; //Video = vTest
-            //vTest.Comments.Add(cTest);
-            //ytTest.Videos.Add(vTest);
-
-
-            //rest.Post<Comment>(new Comment { VideoID = 8, Content= "Hello there", Username="VROOMVROOM"}, "comment"); //Works
-            //rest.Delete(14, "comment"); //Works
-            //rest.Put(new Comment
-            //{ CommentID = 10, VideoID = 8,
-            //  Content = "This Lolipop is kinda filled with emotional hatred and lack of self love ngl.",
-            //  Username = "Lolipop" }, "comment"); //DOESN'T WORK AND CRASHES IN MENU
-            //---------------------------------------------------------------------
 
             Menu();
 
@@ -53,6 +36,10 @@ namespace G1WRGM_HFT_2021221.Client
                 Console.WriteLine("\t5: DELETE (D)"); //D
                 Console.WriteLine("----------------");
                 Console.WriteLine("\t6: First3MostLikedCommentFromVideo");
+                Console.WriteLine("\t7: GetMostWatchedVideoPerYoutubers");
+                Console.WriteLine("\t8: GetVideosWithCommentsFromYoutuber");
+                Console.WriteLine("\t9: VideosWithMoreThan30KViewsFromYoutuber");
+                Console.WriteLine("\t10: AllNegCommsFromYTber");
 
                 int result = 0;
                 while (result == 0)
@@ -89,6 +76,14 @@ namespace G1WRGM_HFT_2021221.Client
                     DELETE(); break;
                 case 6:
                     FIRST3(); break;
+                case 7:
+                    MOSTWATCHEDPERYOUTUBERS(); break;
+                case 8:
+                    VIDEOSWITHCOMMENTSFROMYTBER(); break;
+                case 9:
+                    VIDEOSWITHMORETHAN30KVIEWSFROMYTBER(); break;
+                case 10:
+                    ALLNEGATIVECOMMENTS(); break;
                 default:
                     break;
             }
@@ -304,7 +299,7 @@ namespace G1WRGM_HFT_2021221.Client
                 default:
                     break;
             }
-        }
+        } //Doesn't work
         static void DELETE()
         {
             Console.WriteLine("Please choose one form these:");
@@ -348,10 +343,10 @@ namespace G1WRGM_HFT_2021221.Client
                     rest.Delete(id, "ytcontentcreator");
                     break;
                 case 2:
-                    rest.Delete(id, "ytcontentcreator");
+                    rest.Delete(id, "video");
                     break;
                 case 3:
-                    rest.Delete(id, "ytcontentcreator");
+                    rest.Delete(id, "comment");
                     break;
                 default:
                     break;
@@ -363,7 +358,7 @@ namespace G1WRGM_HFT_2021221.Client
         static void FIRST3()
         {
             int id = 0;
-            while (id == 0)
+            while (id == 0 || id < 0)
             {
                 try
                 {
@@ -377,7 +372,70 @@ namespace G1WRGM_HFT_2021221.Client
                 }
             }
 
-            rest.Get<Video>($"/stat/first3/{id}");
+            List<Video> result = rest.Get<Video>($"/stat/first3/{id}");
+            result.ForEach(x => Console.WriteLine(x));
+        }
+        static void MOSTWATCHEDPERYOUTUBERS()
+        {
+            rest.Get<Video>($"/stat/mostwatched");
+        }
+        static void ALLNEGATIVECOMMENTS()
+        {
+            int id = 0;
+            while (id == 0 || id < 0)
+            {
+                try
+                {
+                    Console.Write("Choose a CreatorID: ");
+                    id = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine();
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Please try this again:");
+                }
+            }
+
+            rest.Get<YTContentCreator>($"/stat/allnegcommsfromytber/{id}");
+        }
+        static void VIDEOSWITHMORETHAN30KVIEWSFROMYTBER()
+        {
+            int id = 0;
+            while (id == 0 || id < 0)
+            {
+                try
+                {
+                    Console.Write("Choose a CreatorID: ");
+                    id = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine();
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Please try this again:");
+                }
+            }
+
+            rest.Get<YTContentCreator>($"/stat/vidmorexviews/{id}");
+        }
+        static void VIDEOSWITHCOMMENTSFROMYTBER()
+        {
+            int id = 0;
+            while (id == 0 || id < 0)
+            {
+                try
+                {
+                    Console.Write("Choose a CreatorID: ");
+                    id = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine();
+                    
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Please try this again:");
+                }
+            }
+
+            rest.Get<YTContentCreator>($"/stat/vidwithmorecomm/{id}");
         }
     }
 }

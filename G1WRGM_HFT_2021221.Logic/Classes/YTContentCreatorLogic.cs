@@ -21,21 +21,42 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
         //NON-CRUD
         public IEnumerable<Comment> GetAllNegativeCommentsFromYoutuber(int id)
         {
-            var r1 = ytccRepo.ReadAll().Where(x => x.CreatorID == id);
-            var r2 = r1.SelectMany(x => x.Videos).Where(x => x.CreatorID == id);
-            var r3 = r2.SelectMany(x => x.Comments).Where(x => x.Likes < 0);
-            return r3;
+            if (id < 1)
+            {
+                throw new IndexOutOfRangeException("Add a positive ID");
+            }
+            else
+            {
+                var r1 = ytccRepo.ReadAll().Where(x => x.CreatorID == id);
+                var r2 = r1.SelectMany(x => x.Videos).Where(x => x.CreatorID == id);
+                var r3 = r2.SelectMany(x => x.Comments).Where(x => x.Likes < 0);
+                return r3;
+            }
         }
 
         public IEnumerable<Video> VideosWithMoreThan30KViewsFromYoutuber(int id)
         {
-            return ytccRepo.ReadAll().Where(x => x.CreatorID == id).SelectMany(x => x.Videos)
+            if (id < 1)
+            {
+                throw new IndexOutOfRangeException("Add a positive ID");
+            }
+            else
+            {
+                return ytccRepo.ReadAll().Where(x => x.CreatorID == id).SelectMany(x => x.Videos)
                 .Where(x => x.ViewCount > 30000);
+            }
         }
         public IEnumerable<Video> GetVideosWithCommentsFromYoutuber(int id)
         {
-            return ytccRepo.ReadAll().Where(x => x.CreatorID == id).SelectMany(x => x.Videos)
+            if (id < 1)
+            {
+                throw new IndexOutOfRangeException("Add a positive ID");
+            }
+            else
+            {
+                return ytccRepo.ReadAll().Where(x => x.CreatorID == id).SelectMany(x => x.Videos)
                 .Where(x => x.Comments.Count != 0);
+            }
         }
 
         public void ChangeSubscriberCount(int id, int newCount)

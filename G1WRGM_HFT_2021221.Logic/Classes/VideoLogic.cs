@@ -58,7 +58,14 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
         //NON-CRUD
         public IEnumerable<Comment> First3MostLikedCommentFromVideo(int id)
         {
-             return videoRepo.ReadAll().Where(x => x.VideoID == id).SelectMany(x => x.Comments).OrderByDescending(x => x.Likes).Take(3);
+            if (id < 1)
+            {
+                throw new IndexOutOfRangeException("Add a positive ID");
+            }
+            else
+            {
+                return videoRepo.ReadAll().Where(x => x.VideoID == id).SelectMany(x => x.Comments).OrderByDescending(x => x.Likes).Take(3);
+            }
         }
 
         public IEnumerable<KeyValuePair<string, Video>> GetMostWatchedVideoPerYoutubers()

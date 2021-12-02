@@ -39,12 +39,12 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
             return db.Comments.FirstOrDefault(x => x.CommentID == id);
         }
 
-        public override IQueryable<Comment> ReadAll() //GetAll csak ReadAll a neve, mert így logikusabb
+        public override IQueryable<Comment> ReadAll() //GetAll csak ReadAll a neve, mert így logikusabbnak gondoltam.
         {
             return db.Comments;
         }
 
-        public override void Update(Comment comment)
+        public override void Update(Comment comment) //The PUT problem arises here.
         {
             Comment commentToUpdate = Read(comment.CommentID);
             commentToUpdate = comment;
@@ -52,12 +52,5 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
         }
 
         //NON-CRUD
-        //public double GetViewsPerLikeRatio(int id)
-        //{
-        //    Comment c = db.Comments.Where(x => x.CommentID == id).First();
-        //    Video v = db.Videos.Where(x => x.Comments.Contains(c)).First();
-        //    double result = v.ViewCount / c.Likes;
-        //    return Math.Round(result, 2);
-        //}
     }
 }

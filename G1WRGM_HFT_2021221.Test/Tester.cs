@@ -145,6 +145,15 @@ namespace G1WRGM_HFT_2021221.Test
             Assert.AreEqual(result.First().Likes, -11);
         }
 
+        [TestCase(-2)]
+        public void GetAllNegativeCommentsFromYoutuberWhenIDIsNegative(int id)
+        {
+            //ARRANGE
+            //ACT
+            //ASSERT
+            Assert.Throws<IndexOutOfRangeException>(() => ytccLogic.GetAllNegativeCommentsFromYoutuber(id));
+        }
+
         [TestCase(1)]
         public void VideosWithMoreThan30KViewsFromYoutuberTest(int id)
         {
@@ -206,12 +215,12 @@ namespace G1WRGM_HFT_2021221.Test
 
         //Video
         [TestCase(1)]
-        public void FirstXMostLikedCommentFromVideo(int id)
+        public void First3MostLikedCommentFromVideo(int id)
         {
             //ARRANGE
             //ACT
             IEnumerable<Comment> result = videoLogic.First3MostLikedCommentFromVideo(id);
-            List<Comment> expected = new List<Comment>() { commentsList[0] };
+            List<Comment> expected = new List<Comment>() { commentsList[0], commentsList[1] };
             //ASSERT
             Assert.AreEqual(result.ToList(), expected);
         }
@@ -263,24 +272,13 @@ namespace G1WRGM_HFT_2021221.Test
             Assert.Throws<Exception>(() => videoLogic.Update(content));
         }
 
-        //Comment
-        //Comment c1 = new Comment()
-        //{
-        //    CommentID = 4,
-        //    VideoID = 2,
-        //    Content = "fsdsdfgs",
-        //    Likes = -341,
-        //    Username = "Polyboi",
-        //    Video = null
-        //};
-
         [TestCase(null)]
         public void CreateForCommentLogicTest(Comment comment)
         {
             //ARRANGE
             //ACT
             //ASSERT
-            Assert.Throws<Exception>(() => commentLogic.Create(comment));
+            Assert.Throws<ArgumentException>(() => commentLogic.Create(comment));
         }
 
         [TestCase(null)]

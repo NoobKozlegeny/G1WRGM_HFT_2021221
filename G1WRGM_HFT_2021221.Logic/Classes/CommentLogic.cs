@@ -18,13 +18,13 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
         }
         public void Create(Comment content)
         {
-            try
+            if (content == null)
+            {
+                throw new ArgumentException("Content is null");
+            }
+            else
             {
                 commentRepo.Create(content);
-            }
-            catch (NullReferenceException)
-            {
-
             }
         }
 
