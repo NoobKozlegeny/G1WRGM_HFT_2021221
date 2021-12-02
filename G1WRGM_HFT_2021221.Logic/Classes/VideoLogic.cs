@@ -70,8 +70,10 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
 
         public IEnumerable<KeyValuePair<string, Comment>> GetMostLikesCommentsFromVideos()
         {
-            return videoRepo.ReadAll()
-                .Select(x => new KeyValuePair<string, Comment>(x.Title, x.Comments.OrderByDescending(y=>y.Likes).First()));
+            //.OrderByDescending(y => y.Likes).First())
+            var result = videoRepo.ReadAll()
+                .Select(x => new KeyValuePair<string, Comment>(x.Title, x.Comments.Where(y=>y.Likes == x.Comments.Max(z=>z.Likes)).First()));
+            return result;
         }
     }
 }

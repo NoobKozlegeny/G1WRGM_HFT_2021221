@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace G1WRGM_HFT_2021221.Client
 {
-    //TODO: DELETE ALL THE UNNEEDED DEPENDENCIES! (Only Model can remain)
+    //TODO: DELETE ALL THE UNNEEDED DEPENDENCIES! (Only Model can remain) (DONE)
     class Program
     {
         static RestService rest = new RestService("http://localhost:42069");
@@ -27,6 +27,7 @@ namespace G1WRGM_HFT_2021221.Client
             bool quit = false;
             while (quit == false)
             {
+                Console.WriteLine();
                 Console.WriteLine("Hello there in my probably Spar budget App! :))");
                 Console.WriteLine("These are your options for today, dear user:");
                 Console.WriteLine("\t1: POST (C)"); //C
@@ -255,19 +256,45 @@ namespace G1WRGM_HFT_2021221.Client
             switch (result)
             {
                 case 1:
-                    rest.Get<YTContentCreator>($"ytcontentcreator/{id}");
+                    try
+                    {
+                        rest.Get<YTContentCreator>($"ytcontentcreator/{id}")
+                        .ForEach(x => Console.WriteLine($"CreatorID: {x.CreatorID}, CreatorName: {x.CreatorName}, Subscribers: {x.SubscriberCount}, Creation: {x.Creation}"));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    
                     break;
                 case 2:
-                    rest.Get<Video>($"video/{id}");
+                    try
+                    {
+                        rest.Get<Video>($"video/{id}")
+                            .ForEach(x => Console.WriteLine($"\tVideoID: {x.VideoID}, Title: {x.Title}, Views: {x.ViewCount}"));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    
                     break;
                 case 3:
-                    rest.Get<Comment>($"comment/{id}");
+                    try
+                    {
+                        rest.Get<Comment>($"comment/{id}")
+                            .ForEach(x => Console.WriteLine($"\t\tCommentID: {x.CommentID}, Username: {x.Username}, Content: {x.Content}, Likes: {x.Likes}"));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
                     break;
                 default:
                     break;
             }
         }
-        static void PUT() //Comment gets updated however YT and Video doesn't
+        static void PUT()
         {
             Console.WriteLine("Please choose one form these:");
             Console.WriteLine("\t1: Youtuber");
@@ -411,9 +438,17 @@ namespace G1WRGM_HFT_2021221.Client
         }
         static void MOSTWATCHEDPERYOUTUBERS()
         {
-            foreach (var vid in rest.Get<Video>($"/stat/getmostwatchedvideoperyoutubers"))
+            foreach (var vid in rest.Get<KeyValuePair<string, Video>>($"/stat/getmostwatchedvideoperyoutubers"))
             {
-                Console.WriteLine($"\tVideoID: {vid.VideoID}, Title: {vid.Title}, Views: {vid.ViewCount}");
+                Console.WriteLine($"\tCreatorName: {vid.Key}");
+                if (vid.Value != null)
+                {
+                    Console.WriteLine($"\t\tVideoID: {vid.Value.VideoID}, Title: {vid.Value.Title}, Views: {vid.Value.ViewCount}");
+                }
+                else
+                {
+                    Console.WriteLine("\t\tNo videos here, just go ahead.");
+                }
             }
         }
         static void ALLNEGATIVECOMMENTS()
@@ -485,12 +520,16 @@ namespace G1WRGM_HFT_2021221.Client
         }
         static void MOSTLIKEDCOMMENTSPERVIDEOS()
         {
-            foreach (var vid in rest.Get<Video>($"/stat/getmostlikescommentsfromvideos"))
+            foreach (var com in rest.Get<KeyValuePair<string, Comment>>($"/stat/getmostlikescommentsfromvideos"))
             {
-                Console.WriteLine($"\tVideoID: {vid.VideoID}, Title: {vid.Title}, Views: {vid.ViewCount}");
-                foreach (var com in vid.Comments)
+                Console.WriteLine($"\tTitle: {com.Key}");
+                if (com.Value != null)
                 {
-                    Console.WriteLine($"\t\tCommentID: {com.CommentID}, Username: {com.Username}, Content: {com.Content}, Likes: {com.Likes}");
+                    Console.WriteLine($"\t\tCommentID: {com.Value.CommentID}, Username: {com.Value.Username}, Content: {com.Value.Content}, Likes: {com.Value.Likes}");
+                }
+                else
+                {
+                    Console.WriteLine("\t\tNo comments here, just go ahead.");
                 }
             }
         }
