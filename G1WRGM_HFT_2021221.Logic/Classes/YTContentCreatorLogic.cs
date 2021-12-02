@@ -42,8 +42,9 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
             }
             else
             {
-                return ytccRepo.ReadAll().Where(x => x.CreatorID == id).SelectMany(x => x.Videos)
+                var result = ytccRepo.ReadAll().Where(x => x.CreatorID == id).SelectMany(x => x.Videos)
                 .Where(x => x.ViewCount > 30000);
+                return result;
             }
         }
         public IEnumerable<Video> GetVideosWithCommentsFromYoutuber(int id)

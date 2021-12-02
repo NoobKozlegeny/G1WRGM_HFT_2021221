@@ -405,7 +405,7 @@ namespace G1WRGM_HFT_2021221.Client
                 }
             }
 
-            var result = rest.Get<Video>($"/stat/first3mostlikedcommentfromvideo/{id}");
+            var result = rest.Get<Comment>($"/stat/first3mostlikedcommentfromvideo/{id}");
             result.ForEach(x => Console.WriteLine(x));
         }
         static void MOSTWATCHEDPERYOUTUBERS()
@@ -430,7 +430,7 @@ namespace G1WRGM_HFT_2021221.Client
                 }
             }
 
-            var result = rest.Get<YTContentCreator>($"/stat/allnegcommsfromytber/{id}");
+            var result = rest.Get<Comment>($"/stat/allnegcommsfromytber/{id}");
             ;
         }
         static void VIDEOSWITHMORETHAN30KVIEWSFROMYTBER()
@@ -450,7 +450,7 @@ namespace G1WRGM_HFT_2021221.Client
                 }
             }
 
-            var result = rest.Get<YTContentCreator>($"/stat/videoswithmorethan30kviewsfromyoutuber/{id}");
+            var result = rest.Get<Video>($"/stat/videoswithmorethan30kviewsfromyoutuber/{id}");
             ;
         }
         static void VIDEOSWITHCOMMENTSFROMYTBER()
@@ -471,12 +471,12 @@ namespace G1WRGM_HFT_2021221.Client
                 }
             }
 
-            var result = rest.Get<YTContentCreator>($"/stat/getvideoswithcommentsfromyoutuber/{id}");
+            var result = rest.Get<Video>($"/stat/getvideoswithcommentsfromyoutuber/{id}");
             ;
         }
         static void MOSTLIKEDCOMMENTSPERVIDEOS()
         {
-            foreach (var vid in rest.Get<Video>($"/stat/getmostlikescommentsfromvideos"))
+            foreach (var vid in rest.Get<Comment>($"/stat/getmostlikescommentsfromvideos"))
             {
                 Console.WriteLine($"\tVideoID: {vid.VideoID}, Title: {vid.Title}, Views: {vid.ViewCount}");
                 foreach (var com in vid.Comments)
