@@ -40,6 +40,7 @@ namespace G1WRGM_HFT_2021221.Client
                 Console.WriteLine("\t8: GetVideosWithCommentsFromYoutuber");
                 Console.WriteLine("\t9: VideosWithMoreThan30KViewsFromYoutuber");
                 Console.WriteLine("\t10: AllNegCommsFromYTber");
+                Console.WriteLine("\t11: GetMostLikesCommentsFromVideos");
 
                 int result = 0;
                 while (result == 0)
@@ -84,6 +85,8 @@ namespace G1WRGM_HFT_2021221.Client
                     VIDEOSWITHMORETHAN30KVIEWSFROMYTBER(); break;
                 case 10:
                     ALLNEGATIVECOMMENTS(); break;
+                case 11:
+                    MOSTLIKEDCOMMENTSPERVIDEOS(); break;
                 default:
                     break;
             }
@@ -124,6 +127,7 @@ namespace G1WRGM_HFT_2021221.Client
                     Console.WriteLine();
 
                     rest.Post(ytcc, "ytcontentcreator");
+                    Console.WriteLine("Succesful post, please refresh the page."+Environment.NewLine);
                     break;
                 case 2:
                     Video video = new Video();
@@ -135,6 +139,7 @@ namespace G1WRGM_HFT_2021221.Client
                     Console.WriteLine();
 
                     rest.Post(video, "video");
+                    Console.WriteLine("Succesful post, please refresh the page." + Environment.NewLine);
                     break;
                 case 3:
                     Comment comment = new Comment();
@@ -146,6 +151,7 @@ namespace G1WRGM_HFT_2021221.Client
                     Console.WriteLine();
 
                     rest.Post(comment, "comment");
+                    Console.WriteLine("Succesful post, please refresh the page." + Environment.NewLine);
                     break;
                 default:
                     break;
@@ -176,13 +182,34 @@ namespace G1WRGM_HFT_2021221.Client
             switch (result)
             {
                 case 1:
-                    rest.Get<YTContentCreator>("ytcontentcreator");
+                    foreach (var item in rest.Get<YTContentCreator>("ytcontentcreator"))
+                    {
+                        Console.WriteLine($"CreatorID: {item.CreatorID}, CreatorName: {item.CreatorName}, Subscribers: {item.SubscriberCount}, Creation: {item.Creation}");
+                        foreach (var vid in item.Videos)
+                        {
+                            Console.WriteLine($"\tVideoID: {vid.VideoID}, Title: {vid.Title}, Views: {vid.ViewCount}");
+                            foreach (var com in vid.Comments)
+                            {
+                                Console.WriteLine($"\t\tCommentID: {com.CommentID}, Username: {com.Username}, Content: {com.Content}, Likes: {com.Likes}");
+                            }
+                        }
+                    }
                     break;
                 case 2:
-                    rest.Get<Video>("video");
+                    foreach (var vid in rest.Get<Video>("video"))
+                    {
+                        Console.WriteLine($"\tVideoID: {vid.VideoID}, Title: {vid.Title}, Views: {vid.ViewCount}");
+                        foreach (var com in vid.Comments)
+                        {
+                            Console.WriteLine($"\t\tCommentID: {com.CommentID}, Username: {com.Username}, Content: {com.Content}, Likes: {com.Likes}");
+                        }
+                    }
                     break;
                 case 3:
-                    rest.Get<Comment>("comment");
+                    foreach (var com in rest.Get<Comment>("comment"))
+                    {
+                        Console.WriteLine($"\t\tCommentID: {com.CommentID}, Username: {com.Username}, Content: {com.Content}, Likes: {com.Likes}");
+                    }
                     break;
                 default:
                     break;
@@ -273,6 +300,7 @@ namespace G1WRGM_HFT_2021221.Client
                     Console.WriteLine();
 
                     rest.Put(ytcc, "ytcontentcreator");
+                    Console.WriteLine("Succesful put/update, please refresh the page." + Environment.NewLine);
                     break;
                 case 2:
                     Video video = new Video();
@@ -284,6 +312,7 @@ namespace G1WRGM_HFT_2021221.Client
                     Console.WriteLine();
 
                     rest.Put(video, "video");
+                    Console.WriteLine("Succesful put/update, please refresh the page." + Environment.NewLine);
                     break;
                 case 3:
                     Comment comment = new Comment();
@@ -295,6 +324,7 @@ namespace G1WRGM_HFT_2021221.Client
                     Console.WriteLine();
 
                     rest.Put(comment, "comment");
+                    Console.WriteLine("Succesful put/update, please refresh the page." + Environment.NewLine);
                     break;
                 default:
                     break;
@@ -341,19 +371,22 @@ namespace G1WRGM_HFT_2021221.Client
             {
                 case 1:
                     rest.Delete(id, "ytcontentcreator");
+                    Console.WriteLine("Succesful delete, please refresh the page." + Environment.NewLine);
                     break;
                 case 2:
                     rest.Delete(id, "video");
+                    Console.WriteLine("Succesful delete, please refresh the page."+Environment.NewLine);
                     break;
                 case 3:
                     rest.Delete(id, "comment");
+                    Console.WriteLine("Succesful delete, please refresh the page."+Environment.NewLine);
                     break;
                 default:
                     break;
             }
         }
 
-        //NON-CRUDS
+        //NON-CRUDS (These can't get values but they work in unit tests tho)
 
         static void FIRST3()
         {
@@ -372,12 +405,13 @@ namespace G1WRGM_HFT_2021221.Client
                 }
             }
 
-            List<Video> result = rest.Get<Video>($"/stat/first3/{id}");
+            var result = rest.Get<Video>($"/stat/first3mostlikedcommentfromvideo/{id}");
             result.ForEach(x => Console.WriteLine(x));
         }
         static void MOSTWATCHEDPERYOUTUBERS()
         {
-            rest.Get<Video>($"/stat/mostwatched");
+            var result = rest.Get<Video>($"/stat/getmostwatchedvideoperyoutubers");
+            ;
         }
         static void ALLNEGATIVECOMMENTS()
         {
@@ -396,7 +430,8 @@ namespace G1WRGM_HFT_2021221.Client
                 }
             }
 
-            rest.Get<YTContentCreator>($"/stat/allnegcommsfromytber/{id}");
+            var result = rest.Get<YTContentCreator>($"/stat/allnegcommsfromytber/{id}");
+            ;
         }
         static void VIDEOSWITHMORETHAN30KVIEWSFROMYTBER()
         {
@@ -415,7 +450,8 @@ namespace G1WRGM_HFT_2021221.Client
                 }
             }
 
-            rest.Get<YTContentCreator>($"/stat/vidmorexviews/{id}");
+            var result = rest.Get<YTContentCreator>($"/stat/videoswithmorethan30kviewsfromyoutuber/{id}");
+            ;
         }
         static void VIDEOSWITHCOMMENTSFROMYTBER()
         {
@@ -435,7 +471,19 @@ namespace G1WRGM_HFT_2021221.Client
                 }
             }
 
-            rest.Get<YTContentCreator>($"/stat/vidwithmorecomm/{id}");
+            var result = rest.Get<YTContentCreator>($"/stat/getvideoswithcommentsfromyoutuber/{id}");
+            ;
+        }
+        static void MOSTLIKEDCOMMENTSPERVIDEOS()
+        {
+            foreach (var vid in rest.Get<Video>($"/stat/getmostlikescommentsfromvideos"))
+            {
+                Console.WriteLine($"\tVideoID: {vid.VideoID}, Title: {vid.Title}, Views: {vid.ViewCount}");
+                foreach (var com in vid.Comments)
+                {
+                    Console.WriteLine($"\t\tCommentID: {com.CommentID}, Username: {com.Username}, Content: {com.Content}, Likes: {com.Likes}");
+                }
+            }
         }
     }
 }

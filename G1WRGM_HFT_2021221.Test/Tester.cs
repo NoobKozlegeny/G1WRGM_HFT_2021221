@@ -225,18 +225,6 @@ namespace G1WRGM_HFT_2021221.Test
             Assert.AreEqual(result.ToList(), expected);
         }
 
-        [Test]
-        public void GetMostWatchedVideoPerYoutubersTest()
-        {
-            //ARRANGE
-            //ACT
-            IEnumerable<KeyValuePair<string, Video>> result = videoLogic.GetMostWatchedVideoPerYoutubers();
-            List<KeyValuePair<string, Video>> expected = new List<KeyValuePair<string, Video>>()
-            { new KeyValuePair<string, Video>("Test 1", videosList[0]) };
-            //ASSERT
-            Assert.AreEqual(result.ToList(), expected);
-        }
-
         [TestCase(null)]
         public void CreateForVideoLogicTest(Video video)
         {
@@ -272,6 +260,7 @@ namespace G1WRGM_HFT_2021221.Test
             Assert.Throws<Exception>(() => videoLogic.Update(content));
         }
 
+        //Comment
         [TestCase(null)]
         public void CreateForCommentLogicTest(Comment comment)
         {
@@ -288,6 +277,21 @@ namespace G1WRGM_HFT_2021221.Test
             //ACT
             //ASSERT
             Assert.Throws<Exception>(() => commentLogic.Update(content));
+        }
+
+        [Test]
+        public void GetMostLikedCommentsPerVideosTest()
+        {
+            //ARRANGE
+            //ACT
+            IEnumerable<KeyValuePair<string, Comment>> result = videoLogic.GetMostLikesCommentsFromVideos();
+            List<KeyValuePair<string, Comment>> expected = new List<KeyValuePair<string, Comment>>()
+            { 
+                new KeyValuePair<string, Comment>("Video 1", commentsList[0]),
+                new KeyValuePair<string, Comment>("Video 2", commentsList[2])
+            };
+            //ASSERT
+            Assert.AreEqual(result.ToList(), expected);
         }
     }
 }

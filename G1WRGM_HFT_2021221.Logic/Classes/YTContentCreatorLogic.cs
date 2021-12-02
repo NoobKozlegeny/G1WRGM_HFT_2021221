@@ -64,6 +64,16 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
             ytccRepo.ChangeSubscriberCount(id, newCount);
         }
 
+        public IEnumerable<KeyValuePair<string, Video>> GetMostWatchedVideoPerYoutubers()
+        {
+            return ytccRepo.ReadAll()
+                .Select(x => new KeyValuePair<string, Video>
+                (
+                    x.CreatorName,
+                    x.Videos.OrderByDescending(y => y.ViewCount).First())
+                );
+        }
+
         //CRUD
         public void Create(YTContentCreator content)
         {

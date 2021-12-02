@@ -68,12 +68,10 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
             }
         }
 
-        public IEnumerable<KeyValuePair<string, Video>> GetMostWatchedVideoPerYoutubers()
+        public IEnumerable<KeyValuePair<string, Comment>> GetMostLikesCommentsFromVideos()
         {
-            return from x in videoRepo.ReadAll()
-                   group x by x.YTContentCreator.CreatorName into g
-                   select new KeyValuePair<string, Video>
-                   (g.Key, g.OrderByDescending(y=>y.ViewCount).First());
+            return videoRepo.ReadAll()
+                .Select(x => new KeyValuePair<string, Comment>(x.Title, x.Comments.OrderByDescending(y=>y.Likes).First()));
         }
     }
 }

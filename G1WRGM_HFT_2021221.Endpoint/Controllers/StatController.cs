@@ -28,39 +28,46 @@ namespace G1WRGM_HFT_2021221.Endpoint.Controllers
             return ytccl.GetAllNegativeCommentsFromYoutuber(id);
         }
 
-        // GET: /stat/vidmorexviews/5
-        [HttpGet]
+        // GET: /stat/videoswithmorethan30kviewsfromyoutuber/5
+        [HttpGet("{id}")]
         public IEnumerable<Video> VideosWithMoreThan30KViewsFromYoutuber(int id)
         {
             return ytccl.VideosWithMoreThan30KViewsFromYoutuber(id);
         }
 
-        // GET: /stat/vidwithmorecomm/5
-        [HttpGet]
+        // GET: /stat/getvideoswithcommentsfromyoutuber/5
+        [HttpGet("{id}")]
         public IEnumerable<Video> GetVideosWithCommentsFromYoutuber(int id)
         {
             return ytccl.GetVideosWithCommentsFromYoutuber(id);
         }
 
-        // GET: /stat/subcount/5
-        [HttpGet]
+        // GET: /stat/changesubscribercount/5
+        [HttpGet("{id}")]
         public void ChangeSubscriberCount(int id, int newCount)
         {
             ytccl.ChangeSubscriberCount(id, newCount);
         }
 
-        // GET: /stat/first3/5
-        [HttpGet]
+        // GET: /stat/first3mostlikedcommentfromvideo/5
+        [HttpGet("{id}")]
         public IEnumerable<Comment> First3MostLikedCommentFromVideo(int id)
         {
             return vl.First3MostLikedCommentFromVideo(id);
         }
 
-        // GET: /stat/mostwatched/5
+        // GET: /stat/getmostwatchedvideoperyoutubers
         [HttpGet]
         public IEnumerable<KeyValuePair<string, Video>> GetMostWatchedVideoPerYoutubers()
         {
-            return vl.GetMostWatchedVideoPerYoutubers();
+            return ytccl.GetMostWatchedVideoPerYoutubers();
+        }
+
+        // GET: /stat/getmostlikescommentsfromvideos
+        [HttpGet]
+        public IEnumerable<KeyValuePair<string, Comment>> GetMostLikesCommentsFromVideos()
+        {
+            return vl.GetMostLikesCommentsFromVideos();
         }
     }
 }
