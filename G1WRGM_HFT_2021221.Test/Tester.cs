@@ -490,6 +490,24 @@ namespace G1WRGM_HFT_2021221.Test
             }
             
         }
+        
+        [Test]
+        public void GetMostLikedCommentsPerVideosTest()
+        {
+            //ARRANGE
+            //ACT
+            IEnumerable<KeyValuePair<string, Comment>> result = videoLogic.GetMostLikesCommentsFromVideos();
+            List<KeyValuePair<string, Comment>> expected = new List<KeyValuePair<string, Comment>>()
+            {
+                new KeyValuePair<string, Comment>("Video 1", commentsList[4]),
+                new KeyValuePair<string, Comment>("Video 2", commentsList[2]),
+                new KeyValuePair<string, Comment>("Video 3", null),
+                new KeyValuePair<string, Comment>("Video 4", commentsList[6]),
+                new KeyValuePair<string, Comment>("Video 5", commentsList[7])
+            };
+            //ASSERT
+            Assert.AreEqual(result.ToList(), expected);
+        }
 
         //Comment
         [TestCase(1)]
@@ -552,22 +570,5 @@ namespace G1WRGM_HFT_2021221.Test
             }
         }
 
-        [Test]
-        public void GetMostLikedCommentsPerVideosTest()
-        {
-            //ARRANGE
-            //ACT
-            IEnumerable<KeyValuePair<string, Comment>> result = videoLogic.GetMostLikesCommentsFromVideos();
-            List<KeyValuePair<string, Comment>> expected = new List<KeyValuePair<string, Comment>>()
-            { 
-                new KeyValuePair<string, Comment>("Video 1", commentsList[4]),
-                new KeyValuePair<string, Comment>("Video 2", commentsList[2]),
-                new KeyValuePair<string, Comment>("Video 3", null),
-                new KeyValuePair<string, Comment>("Video 4", commentsList[6]),
-                new KeyValuePair<string, Comment>("Video 5", commentsList[7])
-            };
-            //ASSERT
-            Assert.AreEqual(result.ToList(), expected);
-        }
     }
 }
