@@ -3,6 +3,7 @@ using G1WRGM_HFT_2021221.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
 
 namespace G1WRGM_HFT_2021221.Client
 {
@@ -32,7 +33,7 @@ namespace G1WRGM_HFT_2021221.Client
                 Console.WriteLine("These are your options for today, dear user:");
                 Console.WriteLine("\t1: POST (C)"); //C
                 Console.WriteLine("\t2: GETALL (R)"); //R
-                Console.WriteLine("\t3: GET (R) -- JSON DESERIALIZE EXCEPTION"); //R
+                Console.WriteLine("\t3: GET (R)"); //R
                 Console.WriteLine("\t4: PUT (U)"); //U
                 Console.WriteLine("\t5: DELETE (D)"); //D
                 Console.WriteLine("----------------");
@@ -42,6 +43,8 @@ namespace G1WRGM_HFT_2021221.Client
                 Console.WriteLine("\t9: VideosWithMoreThan30KViewsFromYoutuber");
                 Console.WriteLine("\t10: AllNegCommsFromYTber");
                 Console.WriteLine("\t11: GetMostLikesCommentsFromVideos");
+                Console.WriteLine("----------------");
+                Console.WriteLine("\t12: ChangeSubscriberCount");
 
                 int result = 0;
                 while (result == 0)
@@ -88,6 +91,8 @@ namespace G1WRGM_HFT_2021221.Client
                     ALLNEGATIVECOMMENTS(); break;
                 case 11:
                     MOSTLIKEDCOMMENTSPERVIDEOS(); break;
+                case 12:
+                    COMMENTMORETHANXLIKEANDXCONTENT(); break;
                 default:
                     break;
             }
@@ -216,7 +221,7 @@ namespace G1WRGM_HFT_2021221.Client
                     break;
             }
         }
-        static void GET() //Json Deserialize exception
+        static void GET()
         {
             Console.WriteLine("Please choose one form these:");
             Console.WriteLine("\t1: Youtuber");
@@ -258,8 +263,8 @@ namespace G1WRGM_HFT_2021221.Client
                 case 1:
                     try
                     {
-                        rest.Get<YTContentCreator>($"ytcontentcreator/{id}")
-                        .ForEach(x => Console.WriteLine($"CreatorID: {x.CreatorID}, CreatorName: {x.CreatorName}, Subscribers: {x.SubscriberCount}, Creation: {x.Creation}"));
+                        var gs = rest.GetSingle<YTContentCreator>($"ytcontentcreator/{id}");
+                        Console.WriteLine($"CreatorID: {gs.CreatorID}, CreatorName: {gs.CreatorName}, Subscribers: {gs.SubscriberCount}, Creation: {gs.Creation}");
                     }
                     catch (Exception e)
                     {
@@ -270,8 +275,8 @@ namespace G1WRGM_HFT_2021221.Client
                 case 2:
                     try
                     {
-                        rest.Get<Video>($"video/{id}")
-                            .ForEach(x => Console.WriteLine($"\tVideoID: {x.VideoID}, Title: {x.Title}, Views: {x.ViewCount}"));
+                        var gs = rest.GetSingle<Video>($"video/{id}");
+                        Console.WriteLine($"\tVideoID: {gs.VideoID}, Title: {gs.Title}, Views: {gs.ViewCount}");
                     }
                     catch (Exception e)
                     {
@@ -282,8 +287,8 @@ namespace G1WRGM_HFT_2021221.Client
                 case 3:
                     try
                     {
-                        rest.Get<Comment>($"comment/{id}")
-                            .ForEach(x => Console.WriteLine($"\t\tCommentID: {x.CommentID}, Username: {x.Username}, Content: {x.Content}, Likes: {x.Likes}"));
+                        var gs = rest.GetSingle<Comment>($"comment/{id}");
+                        Console.WriteLine($"\t\tCommentID: {gs.CommentID}, Username: {gs.Username}, Content: {gs.Content}, Likes: {gs.Likes}");
                     }
                     catch (Exception e)
                     {
@@ -532,6 +537,12 @@ namespace G1WRGM_HFT_2021221.Client
                     Console.WriteLine("\t\tNo comments here, just go ahead.");
                 }
             }
+        }
+        
+        static void COMMENTMORETHANXLIKEANDXCONTENT()
+        {
+            var result = rest.Get<Comment>("/stat/commorexlikexcontent/10/10");
+            result.ForEach(x => Console.WriteLine(x.Username));
         }
     }
 }

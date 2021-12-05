@@ -54,5 +54,13 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
                 throw new ArgumentNullException("Do you want me to take the Geneva rules as Geneva suggestions?");
             }
         }
+
+        public IEnumerable<Comment> CommentsWithMorethanXLikesAndXContent(int likeX, int contentX)
+        {
+            var result = commentRepo.ReadAll()
+                .Where(x => x.Likes > likeX && x.Content.Length > contentX);
+
+            return result;
+        }
     }
 }

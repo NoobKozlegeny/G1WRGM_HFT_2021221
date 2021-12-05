@@ -15,5 +15,8 @@ namespace G1WRGM_HFT_2021221.Logic.Interfaces
         public IList<Comment> ReadAll(); //R
         public void Update(Comment content); //U
         public void Delete(int id); //D
+
+        //NON-CRUD
+        public IEnumerable<Comment> CommentsWithMorethanXLikesAndXContent(int likeX, int contentX);
     }
 }
