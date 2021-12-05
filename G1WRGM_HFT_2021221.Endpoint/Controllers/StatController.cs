@@ -73,7 +73,7 @@ namespace G1WRGM_HFT_2021221.Endpoint.Controllers
         }
 
         // GET: /stat/commorexlikexcontent/10/10
-        [HttpGet("{likex}/{contentx}")]
+        [HttpGet("{likeX}/{contentX}")]
         public IEnumerable<Comment> ComMoreXLikeXContent(int likeX, int contentX)
         {
             return cl.CommentsWithMorethanXLikesAndXContent(likeX, contentX);

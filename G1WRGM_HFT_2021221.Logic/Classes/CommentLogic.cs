@@ -16,6 +16,8 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
         {
             this.commentRepo = commentRepo;
         }
+        
+
         public void Create(Comment content)
         {
             if (content == null)

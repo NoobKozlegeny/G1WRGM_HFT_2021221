@@ -44,7 +44,7 @@ namespace G1WRGM_HFT_2021221.Client
                 Console.WriteLine("\t10: AllNegCommsFromYTber");
                 Console.WriteLine("\t11: GetMostLikesCommentsFromVideos");
                 Console.WriteLine("----------------");
-                Console.WriteLine("\t12: ChangeSubscriberCount");
+                Console.WriteLine("\t12: CommentsWithMorethanXLikesAndXContent -- Returns null");
 
                 int result = 0;
                 while (result == 0)
@@ -541,8 +541,28 @@ namespace G1WRGM_HFT_2021221.Client
         
         static void COMMENTMORETHANXLIKEANDXCONTENT()
         {
-            var result = rest.Get<Comment>("/stat/commorexlikexcontent/10/10");
-            result.ForEach(x => Console.WriteLine(x.Username));
+            int likeX = default;
+            int contentX = default;
+            while (likeX == default(int) && contentX == default(int))
+            {
+                try
+                {
+                    Console.Write("Choose amount of likes: ");
+                    likeX = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine();
+                    Console.Write("Choose length of content: ");
+                    contentX = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine();
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Please try this again:");
+                }
+            }
+
+            var result = rest.Get<Comment>($"/stat/commorexlikexcontent/{likeX}/{contentX}");
+
+            result.ForEach(x => Console.WriteLine($"\tUsername: {x.Username}, Content: {x.Content}, Likes: {x.Likes}"));
         }
     }
 }
