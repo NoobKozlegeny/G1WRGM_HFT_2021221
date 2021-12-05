@@ -24,7 +24,7 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
             }
             else
             {
-                throw new Exception("Dude, add a title, or I'm gonna call your mom");
+                throw new ArgumentNullException("Dude, add a title, or I'm gonna call your mom");
             }
         }
 
@@ -51,7 +51,7 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
             }
             else
             {
-                throw new Exception("Do you want me to take the Geneva rules as Geneva suggestions?");
+                throw new ArgumentNullException("Do you want me to take the Geneva rules as Geneva suggestions?");
             }
         }
 
@@ -70,10 +70,14 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
 
         public IEnumerable<KeyValuePair<string, Comment>> GetMostLikesCommentsFromVideos()
         {
-            //.OrderByDescending(y => y.Likes).First())
-            var result = videoRepo.ReadAll()
-                .Select(x => new KeyValuePair<string, Comment>(x.Title, x.Comments.Where(y=>y.Likes == x.Comments.Max(z=>z.Likes)).First()));
-            return result;
+            var res2 = from x in videoRepo.ReadAll()
+                       group x by x.Title into g
+                       select new KeyValuePair<string, Comment>
+                       (
+                           g.Key,
+                           g.SelectMany(y=>y.Comments).OrderByDescending(y=>y.Likes).FirstOrDefault()
+                       );
+            return res2;
         }
     }
 }

@@ -51,7 +51,13 @@ namespace G1WRGM_HFT_2021221.Test
                 CreatorName = "Test 2",
                 SubscriberCount = 438
             };
-            
+            YTContentCreator ytcc3 = new YTContentCreator()
+            {
+                Creation = 2019,
+                CreatorID = 3,
+                CreatorName = "Test 3",
+                SubscriberCount = 9234921
+            };
 
             var videos = new List<Video>();
             Video v1 = new Video()
@@ -61,7 +67,7 @@ namespace G1WRGM_HFT_2021221.Test
                 CreatorID = 1,
                 ViewCount = 33023,
                 YTContentCreator = ytcc1
-            };
+            }; //0
             Video v2 = new Video()
             {
                 Title = "Video 2",
@@ -69,9 +75,31 @@ namespace G1WRGM_HFT_2021221.Test
                 CreatorID = 1,
                 ViewCount = 4542,
                 YTContentCreator = ytcc1
-            };
-
-            
+            }; //1
+            Video v3 = new Video()
+            {
+                Title = "Video 3",
+                VideoID = 3,
+                CreatorID = 3,
+                ViewCount = 122,
+                YTContentCreator = ytcc3
+            }; //2
+            Video v4 = new Video()
+            {
+                Title = "Video 4",
+                VideoID = 4,
+                CreatorID = 3,
+                ViewCount = 567655,
+                YTContentCreator = ytcc3
+            }; //3
+            Video v5 = new Video()
+            {
+                Title = "Video 5",
+                VideoID = 5,
+                CreatorID = 3,
+                ViewCount = 3123,
+                YTContentCreator = ytcc3
+            }; //4
 
             var comments = new List<Comment>()
             {
@@ -85,7 +113,7 @@ namespace G1WRGM_HFT_2021221.Test
                     Likes = 236,
                     Username = "Sanyi",
                     Video = v1
-                },
+                }, //0
                 new Comment()
                 {
                     CommentID = 2,
@@ -94,7 +122,7 @@ namespace G1WRGM_HFT_2021221.Test
                     Likes = -11,
                     Username = "Róbert",
                     Video = v1
-                },
+                }, //1
                 new Comment()
                 {
                     CommentID = 3,
@@ -103,18 +131,92 @@ namespace G1WRGM_HFT_2021221.Test
                     Likes = 0,
                     Username = "Lali",
                     Video = v2
-                }
+                }, //2
+                new Comment()
+                {
+                    CommentID = 4,
+                    VideoID = 1,
+                    Content = "Comment 4",
+                    Likes = -234,
+                    Username = "LOLCAT",
+                    Video = v1
+                }, //3
+                new Comment()
+                {
+                    CommentID = 5,
+                    VideoID = 1,
+                    Content = "Comment 5",
+                    Likes = 99438,
+                    Username = "BillyHairRefresher",
+                    Video = v1
+                }, //4
+                new Comment()
+                {
+                    CommentID = 6,
+                    VideoID = 4,
+                    Content = "Comment 6",
+                    Likes = -22,
+                    Username = "Tororo",
+                    Video = v4
+                }, //5
+                new Comment()
+                {
+                    CommentID = 7,
+                    VideoID = 4,
+                    Content = "Comment 7",
+                    Likes = 2232,
+                    Username = "Kirby",
+                    Video = v4
+                }, //6
+                new Comment()
+                {
+                    CommentID = 8,
+                    VideoID = 5,
+                    Content = "Comment 8",
+                    Likes = 111,
+                    Username = "KittyKattyWarCrimesHappenedHere",
+                    Video = v5
+                }, //7
+                new Comment()
+                {
+                    CommentID = 9,
+                    VideoID = 5,
+                    Content = "Comment 9",
+                    Likes = 0,
+                    Username = "RattataBoom",
+                    Video = v5
+                }  //8
             }.AsQueryable();
 
+            //Connecting Comment entities to Video entities
             v1.Comments.Add(comments.ToList()[0]);
             v1.Comments.Add(comments.ToList()[1]);
+            v1.Comments.Add(comments.ToList()[3]);
+            v1.Comments.Add(comments.ToList()[4]);
             v2.Comments.Add(comments.ToList()[2]);
+            v4.Comments.Add(comments.ToList()[5]);
+            v4.Comments.Add(comments.ToList()[6]);
+            v5.Comments.Add(comments.ToList()[7]);
+            v5.Comments.Add(comments.ToList()[8]);
+
+            //Adding Video entities to videos
             videos.Add(v1);
             videos.Add(v2);
-            ytcc1.Videos.Add(videos.ToList()[0]);
-            ytcc1.Videos.Add(videos.ToList()[1]);
+            videos.Add(v3);
+            videos.Add(v4);
+            videos.Add(v5);
+
+            //Connecting Video entities to YTContentCreator entities
+            ytcc1.Videos.Add(v1);
+            ytcc1.Videos.Add(v2);
+            ytcc3.Videos.Add(v3);
+            ytcc3.Videos.Add(v4);
+            ytcc3.Videos.Add(v5);
+
+            //Adding YTContentCreator entities to ytccs
             ytccs.Add(ytcc1);
             ytccs.Add(ytcc2);
+            ytccs.Add(ytcc3);
 
             mockYtccRepo.Setup((t) => t.ReadAll()).Returns(ytccs.AsQueryable());
             mockVideoRepo.Setup((t) => t.ReadAll()).Returns(videos.AsQueryable());
@@ -135,148 +237,319 @@ namespace G1WRGM_HFT_2021221.Test
         //YTContentCreator
 
         [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(-2, Description = "GetAllNegativeCommentsFromYoutuberWhenIdIsNegative")]
         public void GetAllNegativeCommentsFromYoutuberTest(int id)
         {
             //ARRANGE
             
             //ACT
-            IEnumerable<Comment> result = ytccLogic.GetAllNegativeCommentsFromYoutuber(id);
+            List<Comment> expected1 = new List<Comment>() { commentsList[1], commentsList[3] };
+            IEnumerable<Comment> expected2 = Enumerable.Empty<Comment>(); //Kinda hesitant if this belongs in ARRANGE or ACT
+            List<Comment> expected3 = new List<Comment>() { commentsList[5] };
             //ASSERT
-            Assert.AreEqual(result.First().Likes, -11);
-        }
-
-        [TestCase(-2)]
-        public void GetAllNegativeCommentsFromYoutuberWhenIDIsNegative(int id)
-        {
-            //ARRANGE
-            //ACT
-            //ASSERT
-            Assert.Throws<IndexOutOfRangeException>(() => ytccLogic.GetAllNegativeCommentsFromYoutuber(id));
+            switch (id)
+            {
+                case -2:
+                    Assert.Throws<IndexOutOfRangeException>(() => ytccLogic.GetAllNegativeCommentsFromYoutuber(id));
+                    break;
+                case 1:
+                    Assert.AreEqual(ytccLogic.GetAllNegativeCommentsFromYoutuber(id).ToList(), expected1); 
+                    break;
+                case 2:
+                    Assert.AreEqual(ytccLogic.GetAllNegativeCommentsFromYoutuber(id).ToList(), expected2);
+                    break;
+                case 3:
+                    Assert.AreEqual(ytccLogic.GetAllNegativeCommentsFromYoutuber(id).ToList(), expected3);
+                    break;
+                default:
+                    break;
+            }
         }
 
         [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(-2, Description = "VideosWithMoreThan30KViewsFromYoutuberWhenIdIsNegative")]
         public void VideosWithMoreThan30KViewsFromYoutuberTest(int id)
         {
             //ARRANGE
 
             //ACT
-            IEnumerable<Video> result = ytccLogic.VideosWithMoreThan30KViewsFromYoutuber(id);
-            List<Video> expected = new List<Video>();
-            expected.Add(videosList[0]);
+            List<Video> expected1 = new List<Video>() { videosList[0] };
+            IEnumerable<Video> expected2 = Enumerable.Empty<Video>();
+            List<Video> expected3 = new List<Video>() { videosList[3] };
             //ASSERT
-            Assert.AreEqual(result.ToList(), expected);
+            switch (id)
+            {
+                case -2:
+                    Assert.Throws<IndexOutOfRangeException>(() => ytccLogic.VideosWithMoreThan30KViewsFromYoutuber(id));
+                    break;
+                case 1:
+                    Assert.AreEqual(ytccLogic.VideosWithMoreThan30KViewsFromYoutuber(id).ToList(), expected1);
+                    break;
+                case 2:
+                    Assert.AreEqual(ytccLogic.VideosWithMoreThan30KViewsFromYoutuber(id).ToList(), expected2);
+                    break;
+                case 3:
+                    Assert.AreEqual(ytccLogic.VideosWithMoreThan30KViewsFromYoutuber(id).ToList(), expected3);
+                    break;
+                default:
+                    break;
+            }
         }
+
         [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(-2)]
         public void GetVideosWithCommentsFromYoutuberTest(int id)
         {
             //ARRANGE
 
             //ACT
-            IEnumerable<Video> result = ytccLogic.GetVideosWithCommentsFromYoutuber(id);
-            List<Video> expected = videosList;
+            List<Video> expected1 = new List<Video>() { videosList[0], videosList[1] };
+            IEnumerable<Video> expected2 = Enumerable.Empty<Video>();
+            List<Video> expected3 = new List<Video>() { videosList[3], videosList[4] };
             //ASSERT
-            Assert.AreEqual(result.ToList(), expected);
+            switch (id)
+            {
+                case -2:
+                    Assert.Throws<IndexOutOfRangeException>(() => ytccLogic.GetVideosWithCommentsFromYoutuber(id));
+                    break;
+                case 1:
+                    Assert.AreEqual(ytccLogic.GetVideosWithCommentsFromYoutuber(id).ToList(), expected1);
+                    break;
+                case 2:
+                    Assert.AreEqual(ytccLogic.GetVideosWithCommentsFromYoutuber(id).ToList(), expected2);
+                    break;
+                case 3:
+                    Assert.AreEqual(ytccLogic.GetVideosWithCommentsFromYoutuber(id).ToList(), expected3);
+                    break;
+                default:
+                    break;
+            }
         }
 
-        [TestCase(null)]
-        public void CreateForYTContentCreatorLogicTest(YTContentCreator ytcc)
+        [TestCase(1)]
+        [TestCase(2)]
+        public void CreateForYTContentCreatorLogicTest(int helper)
         {
             //ARRANGE
-            //ACT
-            //ASSERT
-            Assert.Throws<Exception>(() => ytccLogic.Create(ytcc));
-        }
-
-        [Test]
-        public void CreateForYTContentCreatorLogicTestWhichWontThrow()
-        {
-            //ARRANGE
-            YTContentCreator ytccTest = new YTContentCreator() //Is this hidden dependency?
+            YTContentCreator ytcc1 = null; //TestCase(1)
+            YTContentCreator ytcc2 = new YTContentCreator() //TestCase(2)
             {
                 Creation = 2019,
-                CreatorID = 3,
+                CreatorID = 4,
                 CreatorName = "LolBoi",
                 SubscriberCount = 9943543
                 //Videos = 
             };
             //ACT
             //ASSERT
-            Assert.That(() => ytccLogic.Create(ytccTest), Throws.Nothing);
+            switch (helper)
+            {
+                case 1:
+                    Assert.Throws<ArgumentNullException>(() => ytccLogic.Create(ytcc1));
+                    break;
+                case 2:
+                    Assert.That(() => ytccLogic.Create(ytcc2), Throws.Nothing);
+                    break;
+                default:
+                    break;
+            }
         }
 
-        [TestCase(null)]
-        public void Update(YTContentCreator content)
+        [TestCase(1)]
+        [TestCase(2)]
+        public void UpdateForYTContentCreatorLogicTest(int helper)
         {
             //ARRANGE
+            YTContentCreator ytcc1 = null; //TestCase(1)
+            YTContentCreator ytcc2 = new YTContentCreator() //TestCase(2)
+            {
+                Creation = 2019,
+                CreatorID = 4,
+                CreatorName = "LolBoi",
+                SubscriberCount = 9943543
+                //Videos = 
+            };
             //ACT
             //ASSERT
-            Assert.Throws<Exception>(() => ytccLogic.Update(content));
+            switch (helper)
+            {
+                case 1:
+                    Assert.Throws<ArgumentNullException>(() => ytccLogic.Update(ytcc1));
+                    break;
+                case 2:
+                    Assert.That(() => ytccLogic.Update(ytcc2), Throws.Nothing);
+                    break;
+                default:
+                    break;
+            }
         }
 
         //Video
         [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(4)]
+        [TestCase(5)]
+        [TestCase(-2)]
         public void First3MostLikedCommentFromVideo(int id)
         {
             //ARRANGE
             //ACT
-            IEnumerable<Comment> result = videoLogic.First3MostLikedCommentFromVideo(id);
-            List<Comment> expected = new List<Comment>() { commentsList[0], commentsList[1] };
+            List<Comment> expected1 = new List<Comment>() { commentsList[4], commentsList[0], commentsList[1] };
+            List<Comment> expected2 = new List<Comment>() { commentsList[2] };
+            IEnumerable<Comment> expected3 = Enumerable.Empty<Comment>();
+            List<Comment> expected4 = new List<Comment>() { commentsList[6], commentsList[5] };
+            List<Comment> expected5 = new List<Comment>() { commentsList[7], commentsList[8] };
             //ASSERT
-            Assert.AreEqual(result.ToList(), expected);
+            switch (id)
+            {
+                case -2:
+                    Assert.Throws<IndexOutOfRangeException>(() => videoLogic.First3MostLikedCommentFromVideo(id));
+                    break;
+                case 1:
+                    Assert.AreEqual(videoLogic.First3MostLikedCommentFromVideo(id).ToList(), expected1);
+                    break;
+                case 2:
+                    Assert.AreEqual(videoLogic.First3MostLikedCommentFromVideo(id).ToList(), expected2);
+                    break;
+                case 3:
+                    Assert.AreEqual(videoLogic.First3MostLikedCommentFromVideo(id).ToList(), expected3);
+                    break;
+                case 4:
+                    Assert.AreEqual(videoLogic.First3MostLikedCommentFromVideo(id).ToList(), expected4);
+                    break;
+                case 5:
+                    Assert.AreEqual(videoLogic.First3MostLikedCommentFromVideo(id).ToList(), expected5);
+                    break;
+                default:
+                    break;
+            }
         }
 
-        [TestCase(null)]
-        public void CreateForVideoLogicTest(Video video)
+        [TestCase(1)]
+        [TestCase(2)]
+        public void CreateForVideoLogicTest(int helper)
         {
             //ARRANGE
-            //ACT
-            //ASSERT
-            Assert.Throws<Exception>(() => videoLogic.Create(video));
-        }
-
-        [Test]
-        public void CreateForVideoLogicWhichWontThrow()
-        {
-            //ARRANGE
-            Video vTest = new Video() //Is this hidden dependency?
+            Video v1 = null;
+            Video v2 = new Video()
             {
                 Title = "Video LOLLLLLL",
-                VideoID = 3,
+                VideoID = 6,
                 //CreatorID = null,
                 ViewCount = 33023,
                 //YTContentCreator = null
             };
             //ACT
             //ASSERT
-            Assert.That(() => videoLogic.Create(vTest), Throws.Nothing);
+            switch (helper)
+            {
+                case 1:
+                    Assert.Throws<ArgumentNullException>(() => videoLogic.Create(v1));
+                    break;
+                case 2:
+                    Assert.That(() => videoLogic.Create(v2), Throws.Nothing);
+                    break;
+                default:
+                    break;
+            }
         }
 
-        [TestCase(null)]
-        public void Update(Video content)
+        [TestCase(1)]
+        [TestCase(2)]
+        public void UpdateForVideoLogicTest(int helper)
         {
             //ARRANGE
+            Video v1 = null;
+            Video v2 = new Video()
+            {
+                Title = "Video LOLLLLLL",
+                VideoID = 6,
+                //CreatorID = null,
+                ViewCount = 33023,
+                //YTContentCreator = null
+            };
             //ACT
             //ASSERT
-            Assert.Throws<Exception>(() => videoLogic.Update(content));
+            switch (helper)
+            {
+                case 1:
+                    Assert.Throws<ArgumentNullException>(() => videoLogic.Update(v1));
+                    break;
+                case 2:
+                    Assert.That(() => videoLogic.Update(v2), Throws.Nothing);
+                    break;
+                default:
+                    break;
+            }
+            
         }
 
         //Comment
-        [TestCase(null)]
-        public void CreateForCommentLogicTest(Comment comment)
+        [TestCase(1)]
+        [TestCase(2)]
+        public void CreateForCommentLogicTest(int helper)
         {
             //ARRANGE
+            Comment c1 = null;
+            Comment c2 = new Comment()
+            {
+                CommentID = 10,
+                Username = "XDDGamer",
+                Content = "SWAG YOLO SHREK",
+                //CreatorID = null,
+                Likes = 111
+                //YTContentCreator = null
+            };
             //ACT
             //ASSERT
-            Assert.Throws<ArgumentException>(() => commentLogic.Create(comment));
+            switch (helper)
+            {
+                case 1:
+                    Assert.Throws<ArgumentNullException>(() => commentLogic.Create(c1));
+                    break;
+                case 2:
+                    Assert.That(() => commentLogic.Create(c2), Throws.Nothing);
+                    break;
+                default:
+                    break;
+            }         
         }
 
-        [TestCase(null)]
-        public void Update(Comment content)
+        [TestCase(1)]
+        [TestCase(2)]
+        public void UpdateForCommentLogicTest(int helper)
         {
             //ARRANGE
+            Comment c1 = null;
+            Comment c2 = new Comment()
+            {
+                CommentID = 10,
+                Username = "XDDGamer",
+                Content = "SWAG YOLO SHREK",
+                //CreatorID = null,
+                Likes = 111
+                //YTContentCreator = null
+            };
             //ACT
             //ASSERT
-            Assert.Throws<Exception>(() => commentLogic.Update(content));
+            switch (helper)
+            {
+                case 1:
+                    Assert.Throws<ArgumentNullException>(() => commentLogic.Update(c1));
+                    break;
+                case 2:
+                    Assert.That(() => commentLogic.Update(c2), Throws.Nothing);
+                    break;
+                default:
+                    break;
+            }
         }
 
         [Test]
@@ -287,8 +560,11 @@ namespace G1WRGM_HFT_2021221.Test
             IEnumerable<KeyValuePair<string, Comment>> result = videoLogic.GetMostLikesCommentsFromVideos();
             List<KeyValuePair<string, Comment>> expected = new List<KeyValuePair<string, Comment>>()
             { 
-                new KeyValuePair<string, Comment>("Video 1", commentsList[0]),
-                new KeyValuePair<string, Comment>("Video 2", commentsList[2])
+                new KeyValuePair<string, Comment>("Video 1", commentsList[4]),
+                new KeyValuePair<string, Comment>("Video 2", commentsList[2]),
+                new KeyValuePair<string, Comment>("Video 3", null),
+                new KeyValuePair<string, Comment>("Video 4", commentsList[6]),
+                new KeyValuePair<string, Comment>("Video 5", commentsList[7])
             };
             //ASSERT
             Assert.AreEqual(result.ToList(), expected);
