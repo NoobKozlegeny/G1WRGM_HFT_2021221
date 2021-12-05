@@ -44,7 +44,7 @@ namespace G1WRGM_HFT_2021221.Client
                 Console.WriteLine("\t10: AllNegCommsFromYTber");
                 Console.WriteLine("\t11: GetMostLikesCommentsFromVideos");
                 Console.WriteLine("----------------");
-                Console.WriteLine("\t12: CommentsWithMorethanXLikesAndXContent -- Returns null");
+                Console.WriteLine("\t12: CommentsWithMorethanXLikesAndXContent");
 
                 int result = 0;
                 while (result == 0)
