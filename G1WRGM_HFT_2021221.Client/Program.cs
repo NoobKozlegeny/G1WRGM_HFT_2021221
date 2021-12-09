@@ -42,15 +42,24 @@ namespace G1WRGM_HFT_2021221.Client
                 Console.WriteLine("\t9: VideosWithMoreThan30KViewsFromYoutuber");
                 Console.WriteLine("\t10: AllNegCommsFromYTber");
                 Console.WriteLine("\t11: GetMostLikesCommentsFromVideos");
+                Console.WriteLine("----------------");
+                Console.WriteLine("\t12: Quit");
 
                 int result = 0;
-                while (result == 0)
+                while (result == 0 && quit == false)
                 {
                     try
                     {
-                        Console.Write("What would be on the plate for today? ");
-                        result = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine();
+                        if (result == 12)
+                        {
+                            quit = true;
+                        }
+                        else
+                        {
+                            Console.Write("What would be on the plate for today? ");
+                            result = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine();
+                        }
                     }
                     catch (FormatException)
                     {
