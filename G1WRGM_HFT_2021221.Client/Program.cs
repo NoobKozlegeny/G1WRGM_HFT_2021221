@@ -42,9 +42,9 @@ namespace G1WRGM_HFT_2021221.Client
                 Console.WriteLine("\t8: GetVideosWithCommentsFromYoutuber");
                 Console.WriteLine("\t9: VideosWithMoreThan30KViewsFromYoutuber");
                 Console.WriteLine("\t10: AllNegCommsFromYTber");
-                Console.WriteLine("\t11: GetMostLikesCommentsFromVideos");
+                Console.WriteLine("\t11: GetMostLikesCommentsFromVideos - Doesn't work."); 
                 Console.WriteLine("----------------");
-                Console.WriteLine("\t12: CommentsWithMorethanXLikesAndXContent");
+                Console.WriteLine("\t12: CommentsWithMorethanXLikesAndXContent - NEW");
 
                 int result = 0;
                 while (result == 0 && quit == false)
