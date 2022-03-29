@@ -16,11 +16,13 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
         {
             this.commentRepo = commentRepo;
         }
+        
+
         public void Create(Comment content)
         {
             if (content == null)
             {
-                throw new ArgumentException("Content is null");
+                throw new ArgumentNullException("Content is null");
             }
             else
             {
@@ -51,8 +53,16 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
             }
             else
             {
-                throw new Exception("Do you want me to take the Geneva rules as Geneva suggestions?");
+                throw new ArgumentNullException("Do you want me to take the Geneva rules as Geneva suggestions?");
             }
+        }
+
+        public IEnumerable<Comment> CommentsWithMorethanXLikesAndXContent(int likeX, int contentX)
+        {
+            var result = commentRepo.ReadAll()
+                .Where(x => x.Likes > likeX && x.Content.Length > contentX);
+
+            return result;
         }
     }
 }

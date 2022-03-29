@@ -15,10 +15,12 @@ namespace G1WRGM_HFT_2021221.Endpoint.Controllers
     {
         IYTContentCreatorLogic ytccl;
         IVideoLogic vl;
-        public StatController(IYTContentCreatorLogic ytccl, IVideoLogic vl)
+        ICommentLogic cl;
+        public StatController(IYTContentCreatorLogic ytccl, IVideoLogic vl, ICommentLogic cl)
         {
             this.ytccl = ytccl;
             this.vl = vl;
+            this.cl = cl;
         }
 
         // GET /stat/allnegcommsfromytber/5
@@ -68,6 +70,13 @@ namespace G1WRGM_HFT_2021221.Endpoint.Controllers
         public IEnumerable<KeyValuePair<string, Comment>> GetMostLikesCommentsFromVideos()
         {
             return vl.GetMostLikesCommentsFromVideos();
+        }
+
+        // GET: /stat/commorexlikexcontent/10/10
+        [HttpGet("{likeX}/{contentX}")]
+        public IEnumerable<Comment> ComMoreXLikeXContent(int likeX, int contentX)
+        {
+            return cl.CommentsWithMorethanXLikesAndXContent(likeX, contentX);
         }
     }
 }

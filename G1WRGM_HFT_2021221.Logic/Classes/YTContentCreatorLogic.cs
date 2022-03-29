@@ -84,7 +84,7 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
             }
             else
             {
-                throw new Exception("Dude, add a CreatorName, or I'm gonna call your mom");
+                throw new ArgumentNullException("Dude, add a CreatorName, or I'm gonna call your mom");
             }
         }
 
@@ -112,7 +112,7 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
             }
             else
             {
-                throw new Exception("Do you want me to take the Geneva rules as Geneva suggestions?");
+                throw new ArgumentNullException("Do you want me to take the Geneva rules as Geneva suggestions?");
             }
         }
 
