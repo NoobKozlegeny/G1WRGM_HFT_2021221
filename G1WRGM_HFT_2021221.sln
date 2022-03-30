@@ -28,6 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Others", "Others", "{3CB513
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G1WRGM_HFT_20212202.Wpf.Client", "G1WRGM_HFT_20212202.Wpf.Client\G1WRGM_HFT_20212202.Wpf.Client.csproj", "{8FD56A70-4D08-4A2C-AE14-627108896A32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{892508EB-445F-41A8-B3A6-5E7C6CC8A66F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{892508EB-445F-41A8-B3A6-5E7C6CC8A66F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{892508EB-445F-41A8-B3A6-5E7C6CC8A66F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FD56A70-4D08-4A2C-AE14-627108896A32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FD56A70-4D08-4A2C-AE14-627108896A32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FD56A70-4D08-4A2C-AE14-627108896A32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FD56A70-4D08-4A2C-AE14-627108896A32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{519224B2-32AF-485D-915E-A284886E4F20} = {C0DC2F58-3581-4C35-B0B4-DC0E5DDDD41F}
 		{151DD5A5-2230-4F92-A02B-AE8AB2523B5E} = {C0DC2F58-3581-4C35-B0B4-DC0E5DDDD41F}
 		{892508EB-445F-41A8-B3A6-5E7C6CC8A66F} = {C0DC2F58-3581-4C35-B0B4-DC0E5DDDD41F}
+		{8FD56A70-4D08-4A2C-AE14-627108896A32} = {70E3AEA5-1533-4233-9529-0818E47F7E5F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AE5616CD-3701-46DD-A0FA-5EB8586EB7E4}
