@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:G1WRGM_HFT_20212202.Wpf.Client"
+        xmlns:vm="clr-namespace:G1WRGM_HFT_20212202.Wpf.Client.ViewModels"
         mc:Ignorable="d"
         Title="YT Editor" Height="450" Width="800">
     <Window.DataContext>
-        <local:MainWindowViewModel/>
+        <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -29,6 +30,7 @@
             <Label Content="CreatorName: " Background="LightPink"  Padding="10"/>
             <TextBox Text="{Binding SelectedYTCC.CreatorName}" Padding="10" Margin="0,0,0,20"/>
 
+            <Button Content="Open videos" Command="{Binding OpenCommand}" Margin="10" Padding="10"/>
             <Button Content="Create" Command="{Binding CreateCommand}" Margin="10" Padding="10"/>
             <Button Content="Update" Command="{Binding UpdateCommand}" Margin="10" Padding="10"/>
             <Button Content="Delete" Command="{Binding DeleteCommand}" Margin="10" Padding="10"/>

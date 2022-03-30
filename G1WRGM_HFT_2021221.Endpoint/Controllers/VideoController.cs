@@ -1,6 +1,8 @@
-﻿using G1WRGM_HFT_2021221.Logic.Interfaces;
+﻿using G1WRGM_HFT_2021221.Endpoint.Services;
+using G1WRGM_HFT_2021221.Logic.Interfaces;
 using G1WRGM_HFT_2021221.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +17,11 @@ namespace G1WRGM_HFT_2021221.Endpoint.Controllers
     public class VideoController : ControllerBase
     {
         IVideoLogic vl;
-        public VideoController(IVideoLogic vl)
+        IHubContext<SignalRHub> hub;
+        public VideoController(IVideoLogic vl, IHubContext<SignalRHub> hub)
         {
             this.vl = vl;
+            this.hub = hub;
         }
 
         // GET: /video
@@ -39,6 +43,7 @@ namespace G1WRGM_HFT_2021221.Endpoint.Controllers
         public void Post([FromBody] Video value)
         {
             vl.Create(value);
+            this.hub.Clients.All.SendAsync("VideoCreated", value);
         }
 
         // PUT /video
@@ -46,13 +51,16 @@ namespace G1WRGM_HFT_2021221.Endpoint.Controllers
         public void Put([FromBody] Video value)
         {
             vl.Update(value);
+            this.hub.Clients.All.SendAsync("VideoUpdated", value);
         }
 
         // DELETE /video/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            var videoToDelete = vl.Read(id);
             vl.Delete(id);
+            this.hub.Clients.All.SendAsync("VideoDeleted", videoToDelete);
         }
     }
 }

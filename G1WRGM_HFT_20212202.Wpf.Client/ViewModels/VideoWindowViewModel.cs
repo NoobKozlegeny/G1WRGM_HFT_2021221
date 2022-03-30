@@ -1,38 +1,38 @@
 ﻿using G1WRGM_HFT_2021221.Models;
-using G1WRGM_HFT_20212202.Wpf.Client;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using Microsoft.Toolkit.Mvvm.Input;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 
-namespace G1WRGM_HFT_20212202.Wpf.Client
+namespace G1WRGM_HFT_20212202.Wpf.Client.ViewModels
 {
-    public class MainWindowViewModel : ObservableRecipient
+    public class VideoWindowViewModel : ObservableRecipient
     {
-        public RestCollection<YTContentCreator> YTCC { get; set; }
+        public RestCollection<Video> Videos { get; set; }
 
-        private YTContentCreator selectedYTCC;
+        private Video selectedVideo;
 
-        public YTContentCreator SelectedYTCC
+        public Video SelectedVideo
         {
-            get { return selectedYTCC; }
-            set 
-            { 
+            get { return selectedVideo; }
+            set
+            {
                 if (value != null)
                 {
-                    selectedYTCC = new YTContentCreator()
+                    selectedVideo = new Video()
                     {
-                        CreatorName = value.CreatorName,
+                        Title = value.Title,
+                        VideoID = value.VideoID,
                         CreatorID = value.CreatorID,
-                        Creation = value.Creation,
-                        SubscriberCount = value.SubscriberCount,
-                        Videos = value.Videos
+                        ViewCount = value.ViewCount,
+                        YTContentCreator = value.YTContentCreator,
+                        Comments = value.Comments
                     };
                     OnPropertyChanged();
                     (DeleteCommand as RelayCommand).NotifyCanExecuteChanged();
@@ -53,16 +53,16 @@ namespace G1WRGM_HFT_20212202.Wpf.Client
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
 
-        public MainWindowViewModel()
+        public VideoWindowViewModel()
         {
             if (!IsInDesignMode)
             {
-                YTCC = new RestCollection<YTContentCreator>("http://localhost:42069/", "ytcontentcreator", "hub");
+                Videos = new RestCollection<Video>("http://localhost:42069/", "video", "hub");
 
                 CreateCommand = new RelayCommand(
-                    () => YTCC.Add(new YTContentCreator() 
-                    { 
-                        CreatorName = SelectedYTCC.CreatorName
+                    () => Videos.Add(new Video()
+                    {
+                        Title = SelectedVideo.Title
                     }));
 
                 UpdateCommand = new RelayCommand(
@@ -70,20 +70,26 @@ namespace G1WRGM_HFT_20212202.Wpf.Client
                     {
                         try
                         {
-                            YTCC.Update(SelectedYTCC);
+                            Videos.Update(SelectedVideo);
                         }
                         catch (Exception)
                         {
                             MessageBox.Show("Kaga");
-                        } 
+                        }
                     });
 
                 DeleteCommand = new RelayCommand(
-                    () => YTCC.Delete(SelectedYTCC.CreatorID),
-                    () => SelectedYTCC != null
+                    () => Videos.Delete(SelectedVideo.CreatorID),
+                    () => SelectedVideo != null
                     );
 
-                SelectedYTCC = new YTContentCreator();
+                SelectedVideo = new Video()
+                {
+                    Title = "",
+                    CreatorID = 2,
+                    ViewCount = 0,
+                    Comments = null
+                };
             }
         }
     }
