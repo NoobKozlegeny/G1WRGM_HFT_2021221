@@ -11,7 +11,7 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
 {
     public class VideoLogic : IVideoLogic
     {
-        IVideoRepository videoRepo;
+        IVideoRepository videoRepo { get; set; }
         public VideoLogic(IVideoRepository videoRepo)
         {
             this.videoRepo = videoRepo;

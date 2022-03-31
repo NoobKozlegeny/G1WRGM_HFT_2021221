@@ -12,7 +12,7 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
 {
     public class VideoRepository : Repository<Video>, IVideoRepository
     {
-        YTDbContext db;
+        YTDbContext db { get; set; }
         public VideoRepository(YTDbContext db)
         {
             this.db = db;
@@ -34,7 +34,8 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
 
         public override Video Read(int id)
         {
-            return db.Videos.FirstOrDefault(x => x.VideoID == id);
+            var result = db.Videos.FirstOrDefault(x => x.VideoID == id);
+            return result;
         }
 
         public override IQueryable<Video> ReadAll() //GetAll csak ReadAll a neve, mert így logikusabb

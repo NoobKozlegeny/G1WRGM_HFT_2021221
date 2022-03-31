@@ -1,4 +1,6 @@
-﻿using System;
+﻿using G1WRGM_HFT_20212202.Wpf.Client.ViewModels;
+using G1WRGM_HFT_2021221.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,11 @@ namespace G1WRGM_HFT_20212202.Wpf.Client
     /// </summary>
     public partial class VideoWindow : Window
     {
-        public VideoWindow()
+        public VideoWindow(YTContentCreator ytcc)
         {
             InitializeComponent();
+            this.DataContext = new VideoWindowViewModel();
+            (this.DataContext as VideoWindowViewModel).Setup(ytcc);
         }
     }
 }

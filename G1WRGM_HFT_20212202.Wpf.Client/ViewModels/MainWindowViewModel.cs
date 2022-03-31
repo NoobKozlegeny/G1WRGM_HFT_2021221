@@ -61,7 +61,7 @@ namespace G1WRGM_HFT_20212202.Wpf.Client.ViewModels
                 YTCC = new RestCollection<YTContentCreator>("http://localhost:42069/", "ytcontentcreator", "hub");
 
                 OpenCommand = new RelayCommand(
-                    () => new VideoWindow().ShowDialog(),
+                    () => new VideoWindow(SelectedYTCC).ShowDialog(),
                     () => SelectedYTCC != null
                     );
 

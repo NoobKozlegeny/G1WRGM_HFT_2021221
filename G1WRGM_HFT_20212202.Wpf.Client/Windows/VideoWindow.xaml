@@ -27,9 +27,11 @@
         </Grid>
 
         <StackPanel Grid.Column="1">
-            <Label Content="CreatorName: " Background="LightPink"  Padding="10"/>
+            <Label ContentStringFormat="Selected Creator: {0}" Content="{Binding SelectedYTCC.CreatorName}" Background="HotPink"  Padding="10"/>
+            <Label Content="Title: " Background="LightPink"  Padding="10"/>
             <TextBox Text="{Binding SelectedVideo.Title}" Padding="10" Margin="0,0,0,20"/>
 
+            <Button Content="Open comments" Command="{Binding OpenCommand}" Margin="10" Padding="10"/>
             <Button Content="Create" Command="{Binding CreateCommand}" Margin="10" Padding="10"/>
             <Button Content="Update" Command="{Binding UpdateCommand}" Margin="10" Padding="10"/>
             <Button Content="Delete" Command="{Binding DeleteCommand}" Margin="10" Padding="10"/>

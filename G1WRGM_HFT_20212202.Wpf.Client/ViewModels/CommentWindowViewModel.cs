@@ -12,28 +12,10 @@ using System.Windows.Input;
 
 namespace G1WRGM_HFT_20212202.Wpf.Client.ViewModels
 {
-    public class VideoWindowViewModel : ObservableRecipient
+    public class CommentWindowViewModel : ObservableRecipient
     {
-        //TODO?: Only show the SelectedYTCC's video
-        public RestCollection<Video> Videos { get; set; }
-
-        private YTContentCreator selectedYTCC;
-
-        public YTContentCreator SelectedYTCC
-        {
-            get { return selectedYTCC; }
-            set 
-            { 
-                OnPropertyChanged();
-                SetProperty(ref selectedYTCC, value);
-            }
-        }
-
-        public void Setup(YTContentCreator yTContentCreator)
-        {
-            SelectedYTCC = yTContentCreator;
-        }
-
+        public RestCollection<Comment> Comments { get; set; }
+        
         private Video selectedVideo;
 
         public Video SelectedVideo
@@ -41,15 +23,32 @@ namespace G1WRGM_HFT_20212202.Wpf.Client.ViewModels
             get { return selectedVideo; }
             set
             {
+                OnPropertyChanged();
+                SetProperty(ref selectedVideo, value);
+            }
+        }
+
+        public void Setup(Video video)
+        {
+            SelectedVideo = video;
+        }
+
+        private Comment selectedComment;
+
+        public Comment SelectedComment
+        {
+            get { return selectedComment; }
+            set
+            {
                 if (value != null)
                 {
-                    selectedVideo = new Video()
+                    selectedComment = new Comment()
                     {
-                        Title = value.Title,
-                        VideoID = value.VideoID,
-                        CreatorID = value.CreatorID,
-                        ViewCount = value.ViewCount,
-                        Comments = value.Comments
+                        Content = value.Content,
+                        CommentID = value.CommentID,
+                        Likes = value.Likes,
+                        Username = value.Username,
+                        VideoID = value.VideoID
                     };
                     OnPropertyChanged();
                     (DeleteCommand as RelayCommand).NotifyCanExecuteChanged();
@@ -70,24 +69,22 @@ namespace G1WRGM_HFT_20212202.Wpf.Client.ViewModels
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
 
-
-        public VideoWindowViewModel()
+        public CommentWindowViewModel()
         {
             if (!IsInDesignMode)
             {
-                Videos = new RestCollection<Video>("http://localhost:42069/", "video", "hub");
+                Comments = new RestCollection<Comment>("http://localhost:42069/", "Comment", "hub");
 
                 OpenCommand = new RelayCommand(
                     () => new CommentWindow(SelectedVideo).ShowDialog(),
-                    () => SelectedVideo != null
+                    () => SelectedComment != null
                     );
 
                 CreateCommand = new RelayCommand(
-                    () => Videos.Add(new Video()
+                    () => Comments.Add(new Comment()
                     {
-                        Title = SelectedVideo.Title,
-                        CreatorID = SelectedYTCC.CreatorID,
-                        Comments = new List<Comment>(),
+                        Content = SelectedComment.Content,
+                        CommentID = 1
                     }));
 
                 UpdateCommand = new RelayCommand(
@@ -95,7 +92,7 @@ namespace G1WRGM_HFT_20212202.Wpf.Client.ViewModels
                     {
                         try
                         {
-                            Videos.Update(SelectedVideo);
+                            Comments.Update(SelectedComment);
                         }
                         catch (Exception)
                         {
@@ -104,22 +101,11 @@ namespace G1WRGM_HFT_20212202.Wpf.Client.ViewModels
                     });
 
                 DeleteCommand = new RelayCommand(
-                    () => Videos.Delete(SelectedVideo.VideoID),
-                    () => SelectedVideo != null
+                    () => Comments.Delete(SelectedComment.CommentID),
+                    () => SelectedComment != null
                     );
 
-                SelectedVideo = new Video()
-                {
-                    Title = "",
-                    CreatorID = 2,
-                    ViewCount = 0,
-                    Comments = null
-                };
-
-                SelectedYTCC = new YTContentCreator()
-                {
-                    CreatorName = "Test"
-                };
+                SelectedComment = new Comment();
             }
         }
     }

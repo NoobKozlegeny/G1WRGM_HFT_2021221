@@ -11,7 +11,7 @@ namespace G1WRGM_HFT_2021221.Logic.Classes
 {
     public class CommentLogic : ICommentLogic
     {
-        ICommentRepository commentRepo;
+        ICommentRepository commentRepo { get; set; }
         public CommentLogic(ICommentRepository commentRepo)
         {
             this.commentRepo = commentRepo;
