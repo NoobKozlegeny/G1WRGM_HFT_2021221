@@ -72,17 +72,8 @@ namespace G1WRGM_HFT_20212202.Wpf.Client.ViewModels
                     }));
 
                 UpdateCommand = new RelayCommand(
-                    () =>
-                    {
-                        try
-                        {
-                            YTCC.Update(SelectedYTCC);
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("Kaga");
-                        } 
-                    });
+                    () => YTCC.Update(SelectedYTCC)
+                    );
 
                 DeleteCommand = new RelayCommand(
                     () => YTCC.Delete(SelectedYTCC.CreatorID),

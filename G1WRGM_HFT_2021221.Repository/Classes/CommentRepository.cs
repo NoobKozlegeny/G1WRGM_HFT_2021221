@@ -12,7 +12,7 @@ namespace G1WRGM_HFT_2021221.Repository.Classes
 {
     public class CommentRepository : Repository<Comment>, ICommentRepository
     {
-        YTDbContext db;
+        YTDbContext db { get; set; }
         public CommentRepository(YTDbContext db)
         {
             this.db = db;

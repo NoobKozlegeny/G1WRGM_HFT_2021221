@@ -45,7 +45,6 @@ namespace G1WRGM_HFT_2021221.Data
                 .HasForeignKey(comment => comment.VideoID).OnDelete(DeleteBehavior.Restrict);
             });
 
-
             //YTContentCreator Database default rows
             List<YTContentCreator> CreatorList = new List<YTContentCreator>()
             {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using G1WRGM_HFT_20212202.Wpf.Client.ViewModels;
+using G1WRGM_HFT_2021221.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,11 @@ namespace G1WRGM_HFT_20212202.Wpf.Client
     /// </summary>
     public partial class CommentWindow : Window
     {
-        public CommentWindow()
+        public CommentWindow(Video video)
         {
             InitializeComponent();
+            this.DataContext = new CommentWindowViewModel();
+            (this.DataContext as CommentWindowViewModel).Setup(video);
         }
     }
 }

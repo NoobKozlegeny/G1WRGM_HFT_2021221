@@ -1,6 +1,8 @@
-﻿using G1WRGM_HFT_2021221.Logic.Interfaces;
+﻿using G1WRGM_HFT_2021221.Endpoint.Services;
+using G1WRGM_HFT_2021221.Logic.Interfaces;
 using G1WRGM_HFT_2021221.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +17,11 @@ namespace G1WRGM_HFT_2021221.Endpoint.Controllers
     public class CommentController : ControllerBase
     {
         ICommentLogic cl;
-        public CommentController(ICommentLogic cl)
+        IHubContext<SignalRHub> hub;
+        public CommentController(ICommentLogic cl, IHubContext<SignalRHub> hub)
         {
             this.cl = cl;
+            this.hub = hub;
         }
 
         // GET: /comment
@@ -39,6 +43,7 @@ namespace G1WRGM_HFT_2021221.Endpoint.Controllers
         public void Post([FromBody] Comment value)
         {
             cl.Create(value);
+            this.hub.Clients.All.SendAsync("CommentCreated", value);
         }
 
         // PUT /comment
@@ -46,13 +51,16 @@ namespace G1WRGM_HFT_2021221.Endpoint.Controllers
         public void Put([FromBody] Comment value)
         {
             cl.Update(value);
+            this.hub.Clients.All.SendAsync("CommentUpdated", value);
         }
 
         // DELETE /comment/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            var commentToDelete = cl.Read(id);
             cl.Delete(id);
+            this.hub.Clients.All.SendAsync("CommentDeleted", commentToDelete);
         }
     }
 }

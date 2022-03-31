@@ -91,17 +91,8 @@ namespace G1WRGM_HFT_20212202.Wpf.Client.ViewModels
                     }));
 
                 UpdateCommand = new RelayCommand(
-                    () =>
-                    {
-                        try
-                        {
-                            Videos.Update(SelectedVideo);
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("Kaga");
-                        }
-                    });
+                    () => Videos.Update(SelectedVideo)
+                    );
 
                 DeleteCommand = new RelayCommand(
                     () => Videos.Delete(SelectedVideo.VideoID),

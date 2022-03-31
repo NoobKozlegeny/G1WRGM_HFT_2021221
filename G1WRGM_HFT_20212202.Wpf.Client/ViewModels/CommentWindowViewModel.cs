@@ -73,39 +73,28 @@ namespace G1WRGM_HFT_20212202.Wpf.Client.ViewModels
         {
             if (!IsInDesignMode)
             {
-                Comments = new RestCollection<Comment>("http://localhost:42069/", "Comment", "hub");
-
-                OpenCommand = new RelayCommand(
-                    () => new CommentWindow(SelectedVideo).ShowDialog(),
-                    () => SelectedComment != null
-                    );
+                Comments = new RestCollection<Comment>("http://localhost:42069/", "comment", "hub");
 
                 CreateCommand = new RelayCommand(
                     () => Comments.Add(new Comment()
                     {
                         Content = SelectedComment.Content,
-                        CommentID = 1
+                        VideoID = SelectedVideo.VideoID
                     }));
 
                 UpdateCommand = new RelayCommand(
-                    () =>
-                    {
-                        try
-                        {
-                            Comments.Update(SelectedComment);
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("Kaga");
-                        }
-                    });
+                    () => Comments.Update(SelectedComment)
+                    );
 
                 DeleteCommand = new RelayCommand(
                     () => Comments.Delete(SelectedComment.CommentID),
                     () => SelectedComment != null
                     );
 
-                SelectedComment = new Comment();
+                SelectedComment = new Comment()
+                {
+                    Content = "Insert text here"
+                };
             }
         }
     }
