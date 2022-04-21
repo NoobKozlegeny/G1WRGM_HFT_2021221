@@ -1,5 +1,13 @@
-﻿table {
+﻿body {
+    background: rgb(26,87,205);
+    background: radial-gradient(circle, rgba(26,87,205,1) 0%, rgba(0,212,255,1) 100%);
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+
+table {
     width: 100%;
+    opacity: 0.8;
 }
 
 table, th, td {
@@ -22,17 +30,32 @@ th {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
-    #formdiv label, button, input {
+    #formdiv input {
         margin: 10px;
         padding: 7px;
+        width: 80%;
     }
 
     #formdiv label {
+        margin: 10px;
         font-weight: bolder;
+        text-align: center;
+    }
+
+    #formdiv button {
+        margin: 10px;
+        padding: 7px;
+        width: 40%;
     }
 
 table button {
     padding: 2px;
+}
+
+footer a, p {
+    font-weight: bolder;
 }
