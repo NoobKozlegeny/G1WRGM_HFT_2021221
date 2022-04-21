@@ -1,39 +1,39 @@
 ﻿let ytccs = [];
 let connection = null;
 getdata();
-//setupSignalR();
+setupSignalR();
 
-//function setupSignalR() {
-//    connection = new signalR.HubConnectionBuilder()
-//        .withUrl("http://localhost:42069/hub")
-//        .configureLogging(signalR.LogLevel.Information)
-//        .build();
+function setupSignalR() {
+    connection = new signalR.HubConnectionBuilder()
+        .withUrl("http://localhost:42069/hub")
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
 
-//    connection.on("YTContentCreatorCreated", (user, message) => {
-//        getdata();
-//    });
+    connection.on("YTContentCreatorCreated", (user, message) => {
+        getdata();
+    });
 
-//    connection.on("YTContentCreatorDeleted", (user, message) => {
-//        getdata();
-//    });
+    connection.on("YTContentCreatorDeleted", (user, message) => {
+        getdata();
+    });
 
-//    connection.onclose(async () => {
-//        await start();
-//    });
-//    start();
+    connection.onclose(async () => {
+        await start();
+    });
+    start();
 
 
-//}
+}
 
-//async function start() {
-//    try {
-//        await connection.start();
-//        console.log("SignalR Connected.");
-//    } catch (err) {
-//        console.log(err);
-//        setTimeout(start, 5000);
-//    }
-//};
+async function start() {
+    try {
+        await connection.start();
+        console.log("SignalR Connected.");
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
+};
 
 async function getdata() {
     await fetch('http://localhost:42069/ytcontentcreator')
@@ -68,16 +68,15 @@ function remove(id) {
             getdata();
         })
         .catch((error) => { console.error('Error:', error); });
-
 }
 
 function create() {
     let name = document.getElementById('ytccName').value;
     fetch('http://localhost:42069/ytcontentcreator', {
-    creatorNameMethod: 'POST',
+    method: 'POST',
         headers: { 'Content-Type': 'application/json', },
         body: JSON.stringify(
-            { creatorName: name })
+            { creatorName: name }),
     })
         .then(response => response)
         .then(data => {
@@ -85,5 +84,4 @@ function create() {
             getdata();
         })
         .catch((error) => { console.error('Error:', error); });
-
 }
