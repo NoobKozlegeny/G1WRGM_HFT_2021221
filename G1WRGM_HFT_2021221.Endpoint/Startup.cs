@@ -76,6 +76,12 @@ namespace G1WRGM_HFT_2021221.Endpoint
                 await context.Response.WriteAsJsonAsync(response);
             }));
 
+            app.UseCors(x => x
+                .AllowCredentials()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .WithOrigins("http://localhost:61748"));
+
             app.UseRouting();
 
             app.UseAuthorization();
