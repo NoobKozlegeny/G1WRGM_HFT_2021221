@@ -73,7 +73,9 @@ function remove(id) {
 function create() {
     let com = document.getElementById('comment').value;
     let vidId = document.getElementById('videoID').value;
-    fetch('http://localhost:42069/video', {
+    console.log(com);
+    console.log(vidId);
+    fetch('http://localhost:42069/comment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', },
         body: JSON.stringify(
