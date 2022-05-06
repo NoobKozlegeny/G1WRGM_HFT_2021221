@@ -1,5 +1,6 @@
 ﻿let ytccs = [];
 let connection = null;
+let selectedRowID = -1;
 getdata();
 setupSignalR();
 
@@ -49,8 +50,8 @@ function display() {
     document.getElementById('resultarea').innerHTML = "";
     ytccs.forEach(t => {
         document.getElementById('resultarea').innerHTML +=
-            "<tr><td>" + t.creatorID + "</td><td>" +
-            t.creatorName + "</td><td>" +
+            `<tr><td><a onclick="storeSelectedRowID(${t.creatorID})">` + t.creatorID + `</a></td><td><a onclick="storeSelectedRowID(${ t.creatorID })">` +
+            t.creatorName + "</a></td><td>" +
             `<button type="button" onclick="remove(${t.creatorID})">Delete</button>`
             + "</td></tr>";
     });
@@ -84,4 +85,26 @@ function create() {
             getdata();
         })
         .catch((error) => { console.error('Error:', error); });
+}
+
+function update() {
+    let name = document.getElementById('ytccName').value;
+
+    fetch('http://localhost:42069/ytcontentcreator', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', },
+        body: JSON.stringify(
+            { creatorName: name, creatorID: selectedRowID }),
+    })
+        .then(response => response)
+        .then(data => {
+            console.log('Success:', data);
+            getdata();
+        })
+        .catch((error) => { console.error('Error:', error); });
+}
+
+function storeSelectedRowID(id) {
+    selectedRowID = id;
+    alert("Row with " + id + "selected, UwU")
 }

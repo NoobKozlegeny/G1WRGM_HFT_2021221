@@ -1,5 +1,6 @@
 ﻿let comments = [];
 let connection = null;
+let selectedRowID = -1;
 getdata();
 setupSignalR();
 
@@ -49,8 +50,8 @@ function display() {
     document.getElementById('resultarea').innerHTML = "";
     comments.forEach(t => {
         document.getElementById('resultarea').innerHTML +=
-            "<tr><td>" + t.commentID + "</td><td>" +
-            t.content + "</td><td>" +
+            `<tr><td><a onclick="storeSelectedRowID(${t.commentID})">` + t.commentID + `</a></td><td><a onclick="storeSelectedRowID(${t.commentID})">` +
+            t.content + "</a></td><td>" +
             `<button type="button" onclick="remove(${t.commentID})">Delete</button>`
             + "</td></tr>";
     });
@@ -87,4 +88,27 @@ function create() {
             getdata();
         })
         .catch((error) => { console.error('Error:', error); });
+}
+
+function update() {
+    let com = document.getElementById('comment').value;
+    let vidId = document.getElementById('videoID').value;
+
+    fetch('http://localhost:42069/comment', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', },
+        body: JSON.stringify(
+            { content: com, videoID: vidId, commentID: selectedRowID }),
+    })
+        .then(response => response)
+        .then(data => {
+            console.log('Success:', data);
+            getdata();
+        })
+        .catch((error) => { console.error('Error:', error); });
+}
+
+function storeSelectedRowID(id) {
+    selectedRowID = id;
+    alert("Row with " + id + "selected, UwU")
 }

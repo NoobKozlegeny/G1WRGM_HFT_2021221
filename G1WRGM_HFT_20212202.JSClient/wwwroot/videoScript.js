@@ -1,5 +1,6 @@
 ﻿let videos = [];
 let connection = null;
+let selectedRowID = -1;
 getdata();
 setupSignalR();
 
@@ -49,8 +50,8 @@ function display() {
     document.getElementById('resultarea').innerHTML = "";
     videos.forEach(t => {
         document.getElementById('resultarea').innerHTML +=
-            "<tr><td>" + t.videoID + "</td><td>" +
-            t.title + "</td><td>" +
+            `<tr><td><a onclick="storeSelectedRowID(${t.videoID})">` + t.videoID + `</a></td><td><a onclick="storeSelectedRowID(${t.videoID})">` +
+            t.title + "</a></td><td>" +
             `<button type="button" onclick="remove(${t.videoID})">Delete</button>`
             + "</td></tr>";
     });
@@ -85,4 +86,27 @@ function create() {
             getdata();
         })
         .catch((error) => { console.error('Error:', error); });
+}
+
+function update() {
+    let vidName = document.getElementById('title').value;
+    let crId = document.getElementById('creatorID').value;
+
+    fetch('http://localhost:42069/video', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', },
+        body: JSON.stringify(
+            { title: vidName, creatorID: crId, videoID: selectedRowID }),
+    })
+        .then(response => response)
+        .then(data => {
+            console.log('Success:', data);
+            getdata();
+        })
+        .catch((error) => { console.error('Error:', error); });
+}
+
+function storeSelectedRowID(id) {
+    selectedRowID = id;
+    alert("Row with " + id + "selected, UwU")
 }
